@@ -150,11 +150,11 @@ test('conditional media limits and provider mode are visible for supported model
 
 test('Genjutsu modes are described in the model info box', () => {
     const { context, node } = fixture();
-    context.updateModelInfo(node, models.find(m => m.id === 'higgsfiled-genjutsu-motion-transfer-v1-0'));
+    context.updateModelInfo(node, models.find(m => m.id === 'higgsfield-genjutsu-motion-transfer-v1-0'));
     assert.match(node.widgets[0].__pryxInfoElement.textContent, /Motion Transfer uses one source video plus 1–8 character images/);
     assert.match(node.widgets[0].__pryxInfoElement.textContent, /no separate duration field/);
 
-    context.updateModelInfo(node, models.find(m => m.id === 'higgsfiled-genjutsu-object-swap-v1-0'));
+    context.updateModelInfo(node, models.find(m => m.id === 'higgsfield-genjutsu-object-swap-v1-0'));
     assert.match(node.widgets[0].__pryxInfoElement.textContent, /Object Swap uses one source video plus 1–8 target images/);
 });
 

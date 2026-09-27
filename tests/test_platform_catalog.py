@@ -44,3 +44,23 @@ def test_disappeared_endpoint_requires_manual_review():
             "variant_title": "", "operation_type": "image2video"}
     with pytest.raises(ValueError, match="Previously cataloged endpoints missing"):
         platform.build_catalog({slug: item}, bundled)
+
+
+def test_renamed_genjutsu_endpoint_preserves_curated_notes():
+    bundled = load_bundled_catalog().as_payload()
+    current = next(model for model in bundled["models"] if model["endpoint"].endswith("genjutsu/motion-transfer/v1.0"))
+    old = copy.deepcopy(bundled)
+    legacy = next(model for model in old["models"] if model["endpoint"] == current["endpoint"])
+    legacy["endpoint"] = "higgsfiled/genjutsu/motion-transfer/v1.0"
+    legacy["id"] = "higgsfiled-genjutsu-motion-transfer-v1-0"
+    legacy["notes"] = ["Curated reference handling"]
+    old["models"] = [model for model in old["models"] if model["endpoint"] == legacy["endpoint"]]
+    snapshot = {current["endpoint"]: {
+        "slug": current["endpoint"], "schema": current["input_schema"],
+        "source": current["docs_source"], "title": current["family"],
+        "variant_title": "", "operation_type": "video2video",
+    }}
+    migrated = platform.build_catalog(snapshot, old)["models"][0]
+    assert migrated["id"] == current["id"]
+    assert migrated["endpoint"] == current["endpoint"]
+    assert migrated["notes"] == ["Curated reference handling"]

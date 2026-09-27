@@ -23,6 +23,10 @@ from urllib.request import Request, urlopen
 HOST = "https://open.higgsfield.ai"
 MIN_DISCOVERED_ENDPOINTS = 80  # A shrinking inventory needs manual review.
 LEGACY_DOCUMENTED_ENDPOINTS = {"higgsfield-ai/soul/cinema"}
+RENAMED_ENDPOINTS = {
+    "higgsfield/genjutsu/motion-transfer/v1.0": "higgsfiled/genjutsu/motion-transfer/v1.0",
+    "higgsfield/genjutsu/object-swap/v1.0": "higgsfiled/genjutsu/object-swap/v1.0",
+}
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
@@ -182,13 +186,16 @@ def build_catalog(snapshot: dict[str, dict], bundled: dict) -> dict:
         capability = _capability(slug, item["operation_type"])
         image_output = capability in {"image_generate", "image_edit"}
         previous = existing.pop(slug, None)
+        if previous is None and slug in RENAMED_ENDPOINTS:
+            previous = existing.pop(RENAMED_ENDPOINTS[slug], None)
         title = schema.get("title", "").removesuffix(" Playground") or item["title"]
         display = previous["display_name"] if previous else title
         if not previous and item["variant_title"] and item["variant_title"].lower() not in display.lower():
             display += " · " + item["variant_title"]
         media = sorted({kind for parameter in parameters for kind in parameter.get("media_types", ())})
         models.append({
-            "id": previous["id"] if previous else re.sub(r"[^a-z0-9]+", "-", slug.lower()).strip("-"),
+            "id": (previous["id"] if previous and slug not in RENAMED_ENDPOINTS
+                   else re.sub(r"[^a-z0-9]+", "-", slug.lower()).strip("-")),
             "display_name": display,
             "provider": previous["provider"] if previous else slug.split("/")[0].replace("-", " ").title(),
             "family": previous["family"] if previous else item["title"],

@@ -16,19 +16,27 @@ def test_bundled_catalog_has_documented_model_families():
 
 def test_genjutsu_modes_are_video_edit_models_with_their_documented_inputs():
     catalog = load_bundled_catalog()
-    motion_transfer = catalog.get("higgsfiled-genjutsu-motion-transfer-v1-0")
-    object_swap = catalog.get("higgsfiled-genjutsu-object-swap-v1-0")
+    motion_transfer = catalog.get("higgsfield-genjutsu-motion-transfer-v1-0")
+    object_swap = catalog.get("higgsfield-genjutsu-object-swap-v1-0")
 
     for model in (motion_transfer, object_swap):
         assert model.capability.value == "video_edit"
         assert model.display_name.startswith("Genjutsu ·")
-        assert model.endpoint.startswith("higgsfiled/genjutsu/")
+        assert model.endpoint.startswith("higgsfield/genjutsu/")
         parameters = model.parameter_map
         assert parameters["video_url"].required is True
         assert parameters["image_urls"].required is True
         assert parameters["image_urls"].min_items == 1
         assert parameters["image_urls"].max_items == 8
-        assert parameters["resolution"].choices == ("720p", "480p")
+        assert parameters["resolution"].choices == ("720p", "480p", "1080p")
+
+
+def test_seedance_2_5_resolution_is_available_in_all_five_modes():
+    catalog = load_bundled_catalog()
+    for mode in ("image-to-video", "reference-to-video", "text-to-video", "video-edit", "video-extend"):
+        model = catalog.get(f"seedance-2-5-{mode}")
+        assert model.parameter_map["resolution"].choices == ("480p", "720p", "1080p")
+        assert model.parameter_map["resolution"].default == "720p"
 
 
 def test_catalog_rejects_duplicate_ids():

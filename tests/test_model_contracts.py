@@ -162,6 +162,15 @@ def test_required_images_validate_before_upload_and_reach_estimate(monkeypatch):
     assert len(uploads) == 1
 
 
+def test_seedance_2_5_1080p_reaches_estimate_without_generation():
+    seen = []
+    client = SimpleNamespace(estimate=lambda model, args: seen.append((model.endpoint, args)) or Estimate(1, 0.01))
+    execute_generation("seedance-2-5-text-to-video", {"prompt": "A landscape", "resolution": "1080p"},
+        mode="estimate_only", max_usd=0, auto_save=False, timeout=60, client=client)
+    assert seen[0][0] == "bytedance/seedance-2.5/text-to-video"
+    assert seen[0][1]["resolution"] == "1080p"
+
+
 def test_reference_limits_are_per_field_not_invented_shared_maximum():
     model = CATALOG.get("seedance-2-5-reference-to-video")
     refs = [{"kind": kind, "url": f"https://cdn.example/{kind}/{i}"}

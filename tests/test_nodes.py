@@ -145,8 +145,8 @@ def test_genjutsu_modes_are_selectable_in_video_edit_and_usd_cap_defaults_to_zer
     model_input = VideoEditNode.INPUT_TYPES()["required"]["model"][1]["choices"]
     optional = VideoEditNode.INPUT_TYPES()["optional"]
 
-    assert "higgsfiled-genjutsu-motion-transfer-v1-0" in model_input
-    assert "higgsfiled-genjutsu-object-swap-v1-0" in model_input
+    assert "higgsfield-genjutsu-motion-transfer-v1-0" in model_input
+    assert "higgsfield-genjutsu-object-swap-v1-0" in model_input
     assert optional["max_usd"][1]["default"] == 0.0
 
 

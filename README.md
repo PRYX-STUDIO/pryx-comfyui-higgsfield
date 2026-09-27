@@ -397,7 +397,7 @@ are estimates, not a final billing receipt or account balance.
 
 The bundled catalog is the single source for model IDs, endpoint paths,
 supported inputs, choices, ranges, defaults, conditional requirements, and
-documentation links. Revision `2026-09-23.5` has 81 endpoint entries: 80
+documentation links. Revision `2026-09-27.1` has 81 endpoint entries: 80
 discovered from the public image/video Explore pages and their model families,
 plus one separately documented SOUL Cinema endpoint. This is an inventory of
 the public image/video references at the audit date, not a promise that an
@@ -406,6 +406,12 @@ account has access to every endpoint or that Higgsfield exposes no other models.
 The table below is a snapshot of this bundled revision, not a provider-wide
 inventory. The live dropdown in each node is authoritative for the catalog
 loaded by that ComfyUI installation.
+
+Seedance 2.5 supports `480p`, `720p`, and `1080p` in all five bundled video
+modes (text, image, and reference to video, video edit, and video extend).
+Genjutsu Motion Transfer and Object Swap also offer `1080p`. Their corrected
+API endpoint paths use `higgsfield/genjutsu/...`. `720p` remains the default;
+choose `1080p` in the resolution dropdown when the selected model supports it.
 
 ### Bundled catalog snapshot
 

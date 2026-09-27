@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.3
+
+- Added the API-documented `1080p` option to all five Seedance 2.5 video modes
+  and both Genjutsu modes. The resolution default remains `720p`.
+- Corrected the Genjutsu API paths to `higgsfield/genjutsu/...` and updated
+  their model IDs. Existing workflows that selected the old IDs must reselect
+  the matching Genjutsu model.
+- Refreshed the public model catalog against the September 27, 2026 API schemas.
+
 ## 1.0.2
 
 - Restored model-specific controls and direct connected media inputs across the
