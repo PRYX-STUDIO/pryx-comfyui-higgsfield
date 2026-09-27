@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.4
+
+- Limited file-backed VIDEO inputs to ComfyUI's input, output, and temp
+  directories. Paths outside those directories, including symlinks that point
+  outside them, are rejected before upload.
+
 ## 1.0.3
 
 - Added the API-documented `1080p` option to all five Seedance 2.5 video modes

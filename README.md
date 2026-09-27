@@ -467,6 +467,9 @@ catalog**, click **Refresh catalog**, restart ComfyUI, and reload the browser.
 
 Connect `images` or `video` to downstream ComfyUI nodes. Use URL outputs for
 logging, diagnostics, or workflows that explicitly need the provider URL.
+File-backed VIDEO inputs must be located inside ComfyUI's input, output, or
+temp directory. Media passed directly as bytes or exported by a connected
+VIDEO object does not need a file path in those directories.
 
 ## Troubleshooting
 

@@ -85,7 +85,7 @@ def video_to_bytes(value: Any) -> bytes:
     if isinstance(value, bytes):
         return value
     if isinstance(value, (str, os.PathLike)):
-        return Path(value).read_bytes()
+        return _read_comfy_video_file(value)
     for method_name in ("save_to", "export", "write"):
         method = getattr(value, method_name, None)
         if callable(method):
@@ -98,8 +98,27 @@ def video_to_bytes(value: Any) -> bytes:
                 temporary.unlink(missing_ok=True)
     path = getattr(value, "path", None) or getattr(value, "filename", None)
     if path:
-        return Path(path).read_bytes()
+        return _read_comfy_video_file(path)
     raise MediaError("Could not serialize the VIDEO input to MP4.")
+
+
+def _read_comfy_video_file(value: str | os.PathLike[str]) -> bytes:
+    """Only read videos within ComfyUI's managed media directories."""
+    try:
+        import folder_paths
+
+        path = Path(value).resolve(strict=True)
+        allowed = []
+        for name in ("input", "output", "temp"):
+            getter = getattr(folder_paths, f"get_{name}_directory", None)
+            directory = getter() if callable(getter) else getattr(folder_paths, f"{name}_directory", None)
+            if directory:
+                allowed.append(Path(directory).resolve())
+        if not path.is_file() or not any(path.is_relative_to(root) for root in allowed):
+            raise MediaError("VIDEO file must be inside a ComfyUI input, output, or temp directory.")
+        return path.read_bytes()
+    except (ImportError, OSError, TypeError, ValueError) as error:
+        raise MediaError("Could not read a VIDEO file from a ComfyUI media directory.") from error
 
 
 def upload_reference(client: HiggsfieldClient, reference: Reference) -> str:
