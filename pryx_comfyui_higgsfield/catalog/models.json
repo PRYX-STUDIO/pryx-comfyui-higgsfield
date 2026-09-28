@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "catalog_version": "2026-09-27.1",
-  "source_date": "2026-09-27",
+  "catalog_version": "2026-09-28.1",
+  "source_date": "2026-09-28",
   "models": [
     {
       "id": "alibaba-happy-horse-image-to-video",
@@ -62,7 +62,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/alibaba/happy-horse/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -164,7 +164,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/alibaba/happy-horse/reference-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -273,7 +273,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/alibaba/happy-horse/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -382,7 +382,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/alibaba/happy-horse/v1.1/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -484,7 +484,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/alibaba/happy-horse/v1.1/reference-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -593,7 +593,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/alibaba/happy-horse/v1.1/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -745,7 +745,7 @@
       "max_references": null,
       "result_field": "images",
       "docs_source": "https://open.higgsfield.ai/models/alibaba/qwen-image-3/edit/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -943,7 +943,7 @@
       "max_references": null,
       "result_field": "images",
       "docs_source": "https://open.higgsfield.ai/models/alibaba/qwen-image-3/text-to-image/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -1139,7 +1139,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -1347,7 +1347,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/reference-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -1531,7 +1531,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -1694,7 +1694,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/alibaba/wan-3.0/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -1902,7 +1902,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/alibaba/wan-3.0/reference-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [
         "Provide at least one reference input. `file_url` and `link_url` are mutually exclusive."
@@ -2088,7 +2088,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/alibaba/wan-3.0/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -2223,7 +2223,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/bytedance/seedance-2.0/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [
         "Use public media URLs; `asset://` references are not supported. Framing follows the input image. Do not send reference arrays or `video_url`. Automatic duration (`-1`) is not supported."
@@ -2373,7 +2373,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/bytedance/seedance-2.0/reference-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [
         "Use public media URLs; `asset://` references are not supported. Provide at least one reference image or video. Set an explicit `aspect_ratio`. Automatic duration (`-1`) is not supported."
@@ -2525,7 +2525,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/bytedance/seedance-2.0/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [
         "This endpoint does not accept media inputs. Automatic duration (`-1`) is not supported."
@@ -2657,7 +2657,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/bytedance/seedance-2.5/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [
         "Use public media URLs; `asset://` references are not supported. Framing follows the input image. Do not send reference arrays or `video_url`. Automatic duration (`-1`) is not supported."
@@ -2824,7 +2824,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/bytedance/seedance-2.5/reference-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [
         "Use public media URLs; `asset://` references are not supported. Provide at least one reference image, video, or audio file. Set an explicit `aspect_ratio`. Automatic duration (`-1`) is not supported."
@@ -3011,7 +3011,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/bytedance/seedance-2.5/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [
         "This endpoint does not accept media inputs. Automatic duration (`-1`) is not supported."
@@ -3175,7 +3175,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/bytedance/seedance-2.5/video-edit/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [
         "Use public media URLs; `asset://` references are not supported. Framing follows the source video. First/last-frame inputs are not accepted. Omit `duration`; the source video determines output length."
@@ -3354,7 +3354,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/bytedance/seedance-2.5/video-extend/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [
         "Use public media URLs; `asset://` references are not supported. Framing follows the source video. First/last-frame inputs are not accepted. Automatic duration (`-1`) is not supported."
@@ -3523,7 +3523,7 @@
       "max_references": null,
       "result_field": "images",
       "docs_source": "https://open.higgsfield.ai/models/higgsfield-ai/soul/standard/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -3679,7 +3679,7 @@
       "max_references": null,
       "result_field": "images",
       "docs_source": "https://open.higgsfield.ai/models/higgsfield-ai/soul/v2/standard/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -4031,7 +4031,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/higgsfield/cinema-studio/4.0/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -4323,7 +4323,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/higgsfield/genjutsu/motion-transfer/v1.0/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [
         "Motion Transfer uses one source video plus 1–8 character images; the source video supplies the motion. The API has no separate duration field. Choose 480p or 720p."
@@ -4434,7 +4434,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/higgsfield/genjutsu/object-swap/v1.0/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [
         "Object Swap uses one source video plus 1–8 target images for characters, products, or clothes. The API has no separate duration field. Choose 480p or 720p."
@@ -4571,7 +4571,7 @@
       "max_references": null,
       "result_field": "images",
       "docs_source": "https://open.higgsfield.ai/models/ideogram/v4.0/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -4708,7 +4708,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/motion-control/pro/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -4821,7 +4821,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/motion-control/std/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -4968,7 +4968,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/o3/first-last-frame/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -5191,7 +5191,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/o3/image-reference/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -5375,7 +5375,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/o3/video-edit/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -5515,7 +5515,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/o3/video-reference/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -5659,7 +5659,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/omni/first-last-frame/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -5783,7 +5783,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/omni/image-reference/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -5903,7 +5903,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/omni/video-edit/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -6043,7 +6043,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/omni/video-reference/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -6181,7 +6181,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/v2.5-turbo/pro/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -6275,7 +6275,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/v2.5-turbo/pro/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -6374,7 +6374,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/v2.5-turbo/standard/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -6494,7 +6494,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/v2.6/pro/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -6617,7 +6617,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/v2.6/pro/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -6722,7 +6722,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/v3.0-turbo/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -6814,7 +6814,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/v3.0-turbo/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -6949,7 +6949,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/v3.0/4k/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -7113,7 +7113,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/v3.0/4k/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -7282,7 +7282,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/v3.0/pro/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -7446,7 +7446,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/v3.0/pro/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -7615,7 +7615,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/v3.0/std/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -7779,7 +7779,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/v3.0/std/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -7921,7 +7921,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/v3/motion-control/pro/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -8034,7 +8034,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/v3/motion-control/std/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -8197,7 +8197,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/lightricks/ltx-2.5/image-to-video/fast/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -8401,7 +8401,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/lightricks/ltx-2.5/image-to-video/pro/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -8585,7 +8585,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/lightricks/ltx-2.5/text-to-video/fast/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -8758,7 +8758,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/lightricks/ltx-2.5/text-to-video/pro/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -8938,7 +8938,7 @@
       "max_references": null,
       "result_field": "images",
       "docs_source": "https://open.higgsfield.ai/models/marketing-studio/image/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -9154,7 +9154,7 @@
       "max_references": null,
       "result_field": "images",
       "docs_source": "https://open.higgsfield.ai/models/marketing-studio/image/flare/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -9370,7 +9370,7 @@
       "max_references": null,
       "result_field": "images",
       "docs_source": "https://open.higgsfield.ai/models/marketing-studio/image/sunburst/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -9567,7 +9567,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/minimax/h3/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -9734,7 +9734,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/minimax/h3/reference-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -9893,7 +9893,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/minimax/h3/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -9997,7 +9997,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/minimax/hailuo-2.3/standard/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -10073,7 +10073,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/minimax/hailuo-2.3/standard/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -10192,7 +10192,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/pixverse/v6/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -10340,7 +10340,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/pixverse/v6/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -10487,7 +10487,7 @@
       "max_references": null,
       "result_field": "images",
       "docs_source": "https://open.higgsfield.ai/models/recraft/v4.1/pro/text-to-image/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -10667,7 +10667,7 @@
       "max_references": null,
       "result_field": "images",
       "docs_source": "https://open.higgsfield.ai/models/recraft/v4.1/text-to-image/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -10847,7 +10847,7 @@
       "max_references": null,
       "result_field": "images",
       "docs_source": "https://open.higgsfield.ai/models/recraft/v4.1/utility/pro/text-to-image/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -11027,7 +11027,7 @@
       "max_references": null,
       "result_field": "images",
       "docs_source": "https://open.higgsfield.ai/models/recraft/v4.1/utility/text-to-image/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -11222,7 +11222,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/wan/v2.6/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -11357,7 +11357,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/wan/v2.6/reference-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -11491,7 +11491,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/wan/v2.6/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -11637,7 +11637,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/wan/v2.7/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -11793,7 +11793,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/wan/v2.7/reference-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -11974,7 +11974,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/wan/v2.7/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -12112,7 +12112,7 @@
       "max_references": null,
       "result_field": "images",
       "docs_source": "https://open.higgsfield.ai/models/xai/grok-imagine-image-2.0/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -12265,7 +12265,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/xai/grok-imagine-video/v1.5/reference-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -12402,7 +12402,7 @@
       "max_references": null,
       "result_field": "images",
       "docs_source": "https://open.higgsfield.ai/models/z-image/turbo/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-09-28",
       "status": "active",
       "notes": [],
       "input_schema": {
