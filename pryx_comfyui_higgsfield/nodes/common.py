@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import math
 import time
 from dataclasses import dataclass, field
 from typing import Any, Mapping
@@ -77,9 +78,9 @@ def execute_generation(
 ) -> GenerationOutcome:
     if mode not in {"estimate_only", "generate"}:
         raise ValidationError("mode must be estimate_only or generate.")
-    if max_usd < 0:
+    if not math.isfinite(max_usd) or max_usd < 0:
         raise ValidationError("max_usd must be zero or a positive value.")
-    if timeout <= 0:
+    if not math.isfinite(timeout) or timeout <= 0:
         raise ValidationError("timeout must be greater than zero.")
 
     active_catalog = catalog or runtime_catalog()
@@ -105,6 +106,9 @@ def execute_generation(
     owned_client = client is None
     hf_client = client or HiggsfieldClient.from_environment(timeout=timeout)
     try:
+        if model.endpoint == "higgsfield/ai-influencer" and normalized.get("selection"):
+            from ..model_options import INFLUENCER_OPTIONS, validate_appearance
+            validate_appearance(hf_client.get_json(INFLUENCER_OPTIONS), normalized["tier"], normalized["selection"])
         if ref_values:
             uploaded: list[dict[str, Any]] = []
             for index, reference in enumerate(ref_values):

@@ -6,7 +6,7 @@ import json
 import pytest
 
 from pryx_comfyui_higgsfield.catalog import load_bundled_catalog
-from tools import sync_platform_catalog as platform
+from pryx_comfyui_higgsfield.catalog import discovery as platform
 
 
 def test_official_flight_reference_extracts_matching_endpoint_and_family(monkeypatch):
@@ -18,12 +18,16 @@ def test_official_flight_reference_extracts_matching_endpoint_and_family(monkeyp
             '{"slug":"minimax/h3/image-to-video"}]')
     page = f"<script>self.__next_f.push([1,{json.dumps(data)}])</script>"
     monkeypatch.setattr(platform, "fetch_public", lambda url: page)
-    variants, item = platform.inspect_family(slug)
+    variants, item = platform.inspect_legacy_page(slug)
     assert variants == {slug, "minimax/h3/image-to-video"}
     assert item["schema"] == schema
 
 
 def test_missing_reference_fails_instead_of_generating_partial_catalog(monkeypatch):
+    from urllib.error import URLError
+    def unavailable():
+        raise URLError("offline")
+    monkeypatch.setattr(platform, "public_model_inventory", unavailable)
     monkeypatch.setattr(platform, "fetch_public", lambda url: "<html></html>")
     with pytest.raises(ValueError, match="No model links"):
         platform.audit()

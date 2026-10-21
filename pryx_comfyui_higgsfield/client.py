@@ -135,11 +135,15 @@ class HiggsfieldClient:
         self._upload_client.close()
 
     def estimate(self, model: ModelSpec, arguments: Mapping[str, Any]) -> Estimate:
-        response = self._request(
-            "POST",
-            f"/estimate/{model.endpoint.lstrip('/')}",
-            json=dict(arguments),
-        )
+        try:
+            response = self._request(
+                "POST",
+                f"/estimate/{model.endpoint.lstrip('/')}",
+                json=dict(arguments),
+            )
+        except APIError as error:
+            error.message = f"Cost estimate failed for {model.display_name}. No paid generation was submitted. " + error.message
+            raise
         payload = response.json()
         estimate = Estimate.from_payload(payload)
         if estimate.usd is not None or not isinstance(payload, Mapping):
@@ -190,6 +194,7 @@ class HiggsfieldClient:
                 retryable=False,
                 ambiguous_submission=True,
             ) from error
+
         except httpx.RequestError as error:
             raise APIError(
                 status_code=None,
@@ -206,6 +211,25 @@ class HiggsfieldClient:
                 status_code=response.status_code,
                 message="Higgsfield returned an invalid generation acceptance response.",
             ) from error
+
+    def create_custom_reference(self, arguments: Mapping[str, Any]) -> Mapping[str, Any]:
+        """Submit SOUL training exactly once; never retry an ambiguous POST."""
+        try:
+            response = self._request("POST", "/v1/custom-references", json=dict(arguments))
+        except APIError as error:
+            if error.status_code is None:
+                error.ambiguous_submission = True
+                error.retryable = False
+            raise
+        try:
+            payload = response.json()
+            if not isinstance(payload, Mapping) or not payload.get("id") or not payload.get("status"):
+                raise ValueError("Invalid training response")
+            return payload
+        except (ValueError, TypeError) as error:
+            raise APIError(status_code=response.status_code,
+                           message="SOUL ID training returned an invalid response; it may have been accepted. Do not resubmit blindly.",
+                           ambiguous_submission=True) from error
 
     def status(self, status_url: str, *, attempts: int = 4) -> StatusSnapshot:
         response = self._request_with_retry("GET", status_url, attempts=attempts)

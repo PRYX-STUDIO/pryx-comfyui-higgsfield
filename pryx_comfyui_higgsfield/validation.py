@@ -45,7 +45,7 @@ def normalize_arguments(
         if value is not None and not (value == "" and name in known and not known[name].required):
             normalized[str(name)] = value
     for name, spec in known.items():
-        if name not in normalized and spec.default is not None and (spec.default != "" or spec.required):
+        if not spec.read_only and name not in normalized and spec.default is not None and (spec.default != "" or spec.required):
             normalized[name] = spec.default
     validate_arguments(model, normalized, allow_unknown=allow_unknown)
     return normalized
@@ -66,6 +66,10 @@ def validate_arguments(
             f"Unknown parameter(s) for {model.display_name}: {', '.join(sorted(map(str, unknown)))}"
         )
     for name, spec in known.items():
+        if spec.read_only:
+            if name in arguments:
+                raise ValidationError(f"{name} is computed by the provider and cannot be set.")
+            continue
         if spec.required and (name not in arguments or arguments[name] in (None, "")):
             raise ValidationError(f"Missing required parameter: {name}")
         if name not in arguments or arguments[name] is None:
@@ -231,6 +235,8 @@ def references_to_arguments(
     for item in remaining:
         kind, url = item["kind"], item["url"]
         plural = f"{kind}_urls"
+        if kind == "image" and plural not in params and "item_image_urls" in params:
+            plural = "item_image_urls"
         field = next((name for name in singular_fields[kind] if name in params and name not in result and params[name].required), None)
         if field:
             result[field] = url

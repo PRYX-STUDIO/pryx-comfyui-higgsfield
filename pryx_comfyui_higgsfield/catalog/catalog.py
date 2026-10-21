@@ -102,17 +102,19 @@ def catalog_from_payload(payload: Mapping[str, Any], *, source: str) -> Catalog:
     )
 
 
+def catalog_version(catalog: Catalog) -> tuple[int, ...]:
+    try:
+        return tuple(int(part) for part in catalog.catalog_version.replace("-", ".").split("."))
+    except ValueError:
+        return (0,)
+
+
 @lru_cache(maxsize=1)
 def runtime_catalog() -> Catalog:
     """One immutable schema for frontend, node definitions, and requests per process."""
     bundled = load_bundled_catalog()
     cached = CatalogManager(auto_refresh=False)._read_cache()
-    def version(catalog):
-        return tuple(int(part) for part in catalog.catalog_version.replace("-", ".").split("."))
-    try:
-        return cached if cached and version(cached) > version(bundled) else bundled
-    except ValueError:
-        return bundled
+    return cached if cached and catalog_version(cached) > catalog_version(bundled) else bundled
 
 
 def validate_catalog_payload(payload: Mapping[str, Any]) -> None:
@@ -189,7 +191,9 @@ def validate_catalog_payload(payload: Mapping[str, Any]) -> None:
                 raise CatalogError(f"Input schema and parameters disagree: {model_id}")
             def reject_remote_refs(value):
                 if isinstance(value, Mapping):
-                    if any(key in value for key in ("$ref", "$dynamicRef", "$id")):
+                    if "$dynamicRef" in value or "$id" in value or (
+                        "$ref" in value and (not isinstance(value["$ref"], str) or not value["$ref"].startswith("#/"))
+                    ):
                         raise CatalogError(f"Remote schema references are forbidden: {model_id}")
                     for child in value.values():
                         reject_remote_refs(child)
@@ -197,6 +201,13 @@ def validate_catalog_payload(payload: Mapping[str, Any]) -> None:
                     for child in value:
                         reject_remote_refs(child)
             reject_remote_refs(input_schema)
+            from ..schema import resolve_property, validate_local_references
+            try:
+                validate_local_references(input_schema)
+                for prop in input_schema.get("properties", {}).values():
+                    resolve_property(prop, input_schema)
+            except (ValueError, KeyError, TypeError, IndexError, RecursionError) as error:
+                raise CatalogError(f"Invalid local schema reference in {model_id}.") from error
             try:
                 Draft202012Validator.check_schema(input_schema)
             except SchemaError as error:
@@ -235,6 +246,8 @@ class CatalogManager:
     def load(self) -> Catalog:
         bundled = load_bundled_catalog()
         cached = self._read_cache()
+        if cached and catalog_version(cached) < catalog_version(bundled):
+            cached = None
         if cached and not self.auto_refresh:
             self.last_sync_status = "cache:automatic-refresh-disabled"
             return cached
@@ -243,8 +256,9 @@ class CatalogManager:
             return cached
         if self.auto_refresh:
             try:
-                refreshed = self.refresh()
-                self.last_sync_status = "remote:updated"
+                refreshed = self.refresh_available()
+                if not self.last_sync_status.startswith("higgsfield-api:"):
+                    self.last_sync_status = "remote:updated"
                 return refreshed
             except CatalogError:
                 self.last_sync_status = "remote:failed"
@@ -253,6 +267,32 @@ class CatalogManager:
             return cached
         self.last_sync_status = "bundled:fallback"
         return bundled
+
+    def refresh_available(self) -> Catalog:
+        """Prefer the authenticated schema API; fall back to reviewed releases."""
+        from ..client import HiggsfieldClient
+        from ..credentials import resolve_credentials
+        from ..errors import HiggsfieldError
+        from .discovery import authenticated_snapshot, build_catalog
+        try:
+            credentials = resolve_credentials(allow_missing=True)
+            if credentials:
+                client = HiggsfieldClient(credentials, timeout=30)
+                try:
+                    snapshot = authenticated_snapshot(client)
+                finally:
+                    client.close()
+                bundled = load_bundled_catalog()
+                cached = self._read_cache()
+                base = cached if cached and catalog_version(cached) > catalog_version(bundled) else bundled
+                payload = build_catalog(snapshot, base.as_payload())
+                catalog = catalog_from_payload(payload, source="higgsfield-api")
+                self._write_cache(payload)
+                self.last_sync_status = "higgsfield-api:updated"
+                return catalog
+        except (HiggsfieldError, ValueError, KeyError, TypeError):
+            self.last_sync_status = "higgsfield-api:failed"
+        return self.refresh()
 
     def refresh(self) -> Catalog:
         if self.remote_url != CATALOG_REMOTE_URL:
@@ -273,12 +313,20 @@ class CatalogManager:
         except (UnicodeDecodeError, ValueError) as error:
             raise CatalogError("The remote Higgsfield catalog is not valid JSON.") from error
         catalog = catalog_from_payload(payload, source="remote")
+        bundled = load_bundled_catalog()
+        cached = self._read_cache()
+        newest = cached if cached and catalog_version(cached) > catalog_version(bundled) else bundled
+        if catalog_version(catalog) < catalog_version(newest):
+            self.last_sync_status = "remote:older-catalog-ignored"
+            return newest
         self._write_cache(payload)
         return catalog
 
     def metadata(self) -> dict[str, Any]:
         catalog = self._read_cache()
         bundled = load_bundled_catalog()
+        if catalog and catalog_version(catalog) < catalog_version(bundled):
+            catalog = None
         return {
             "catalog_version": catalog.catalog_version if catalog else bundled.catalog_version,
             "source_date": catalog.source_date if catalog else bundled.source_date,

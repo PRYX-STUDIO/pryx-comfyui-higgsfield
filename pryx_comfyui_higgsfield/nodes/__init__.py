@@ -12,9 +12,11 @@ from .generation import (
     VideoExtendNode,
 )
 from .references import ReferenceCollectorNode
+from .soul_id import SoulIDNode
 
 
 NODE_CLASS_MAPPINGS = {
+    "PRYXComfyUIHiggsfieldSoulID": SoulIDNode,
     "PRYXComfyUIHiggsfieldModelCatalog": ModelCatalogNode,
     "PRYXComfyUIHiggsfieldReferenceCollector": ReferenceCollectorNode,
     "PRYXComfyUIHiggsfieldReferencePreview": ReferencePreviewNode,
@@ -28,6 +30,7 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
+    "PRYXComfyUIHiggsfieldSoulID": "PRYX ComfyUI Higgsfield SOUL ID",
     "PRYXComfyUIHiggsfieldModelCatalog": "PRYX ComfyUI Higgsfield Model Catalog",
     "PRYXComfyUIHiggsfieldReferenceCollector": "PRYX ComfyUI Higgsfield Reference Collector",
     "PRYXComfyUIHiggsfieldReferencePreview": "PRYX ComfyUI Higgsfield Reference Preview",

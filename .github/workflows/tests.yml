@@ -24,4 +24,4 @@ jobs:
       - name: Unit and mock integration tests
         run: python -m pytest -q
       - name: Frontend contract tests
-        run: node --test tests/reference_preview.test.cjs
+        run: node --test tests/dynamic_widgets.test.cjs tests/reference_preview.test.cjs tests/settings_credentials.test.cjs

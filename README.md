@@ -206,11 +206,47 @@ shows which media item becomes `Image 1`, `Video 1`, and so on.
 ### PRYX ComfyUI Higgsfield Image Generate & Edit
 
 Generate images or edit images with the catalog's image endpoints. The model
-dropdown covers the current SOUL, Recraft, Marketing Studio, and Grok image
-entries. Connect an `IMAGE` input when the selected edit model supports source
-images. The visible parameter widgets change with the selected model.
+dropdown covers SOUL, Recraft, Marketing Studio, Ads Studio, AI Influencer,
+and the other catalog image endpoints. Connect an `IMAGE` input when the
+selected edit model supports source images. The visible parameter widgets
+change with the selected model.
+
+**AI Influencer:** connect the identity photo to `image`. Clothing/object
+references go to `item_images` (an image batch) or the Reference Collector,
+with a separate limit of three item images. Connected `prompt` text is sent
+as `brief`, with a 4000-character limit. The collapsed appearance picker loads
+the current category and option names from Higgsfield; its choices depend on
+`tier`. Counts, exclusive choices, and facial slots are checked before upload.
+Human tiers hide animal-only controls. `pinned_species` and `trait_variants`
+are advanced overrides: normally leave them blank, because the appearance
+catalog does not expose all valid identifiers for those fields.
+
+**Ads Studio:** accepts up to ten product/reference images and generates one
+to eight images. Its token-based bill is reconciled after completion, so the
+estimate is not a guaranteed final charge.
 
 **Outputs:** `images`, `image_urls`, `request_id`, `credits`, `usd`, `status`
+
+### PRYX ComfyUI Higgsfield SOUL ID
+
+Create a reusable SOUL character from one to 100 connected images. This is a
+training workflow, not an image-generation endpoint.
+
+- `validate_only` is the default. It checks the name, model version and image
+  count locally, without uploads or API requests.
+- `train` uploads the images and submits one training request. Training may
+  cost money; the inference `estimate_only` and `max_usd` controls do not apply.
+  The node returns immediately with the character ID and current status.
+- `check` reads the status of an existing `reference_id`. Queue this action
+  again to check progress; do not start another training to poll.
+
+Choose `v1`, `v2`, or `cinema` to match the SOUL model that will use the character.
+Once training is `completed`, connect `custom_reference_id` to that model's
+input with the same name. Where supported, `custom_reference_strength` adjusts
+its influence. Keep the ID after training: a fresh execution of `train` can
+create another paid training, for example after restarting ComfyUI.
+
+**Outputs:** `custom_reference_id`, `status` (JSON text)
 
 ### PRYX ComfyUI Higgsfield Text to Video
 
@@ -248,10 +284,21 @@ for several inputs.
 
 Edit an existing video with a prompt and the controls supported by the active
 catalog model. The model dropdown includes Genjutsu Motion Transfer and
-Genjutsu Object Swap as separate modes, alongside the other documented video
-edit models. Connect the source video to `video`; optional model-supported
+Object Swap, their Light variants, and Genjutsu Restyle as separate modes,
+alongside the other documented video edit models. Connect the source video to
+`video`; optional model-supported
 image or audio inputs appear when supported, and additional references can be
 supplied through `references`.
+
+**Genjutsu Light:** one source video and one to eight images. Duration is
+computed by Higgsfield from the source, rounded up and capped at 15 seconds;
+there is no editable duration control. The model info panel explains this.
+
+**Genjutsu Restyle:** choose a named preset from the live preset dropdown and
+connect a source video. The source must be at least four seconds; longer clips
+are trimmed to the first 30 seconds. Up to five optional character images are
+supported. Motion and source audio are retained. The API exposes no duration,
+FPS, or generated-audio control for this mode.
 
 **Outputs:** `video`, `local_file`, `remote_url`, `request_id`, `credits`, `usd`,
 `status`
@@ -297,6 +344,8 @@ Use a direct input when the role is unambiguous:
 - `end_image` is the explicit ending frame where the selected model supports it
 - `video` is the source video for edit/extend nodes
 - `audio` is an audio reference for models that accept one
+- `item_images` is the AI Influencer clothing/object image batch, separate
+  from its identity photo
 - `references` is an ordered collection of additional media
 
 The frontend hides inputs that the selected model cannot use. The backend
@@ -373,13 +422,22 @@ only after the estimate succeeds.
 ### Cost limits
 
 - `max_usd = 0` disables the local cost limit.
-- A positive `max_usd` is a hard upper bound.
+- A positive `max_usd` is an upper bound on the **pre-submission USD estimate**.
 - If the provider returns no USD estimate, a positive limit blocks generation.
 - If the estimate exceeds the limit, no generation request is submitted.
 
 The estimate is the best request-specific price supplied by the provider for
 the selected model, duration, resolution, and references. `credits` and `usd`
 are estimates, not a final billing receipt or account balance.
+
+Final provider charges can differ, especially for token-based services such
+as Ads Studio. This local check cannot impose an account-level billing cap.
+
+Some endpoints return only a pricing description, with no numeric USD or
+credit estimate. Missing values stay unavailable: the numeric output is `-1`,
+not zero, and `status` retains the provider response. A positive `max_usd`
+blocks generation when USD is unknown. An estimate error also stops the
+request; it never triggers an unquoted generation as a fallback.
 
 ### Common safety controls
 
@@ -397,11 +455,10 @@ are estimates, not a final billing receipt or account balance.
 
 The bundled catalog is the single source for model IDs, endpoint paths,
 supported inputs, choices, ranges, defaults, conditional requirements, and
-documentation links. Revision `2026-09-27.1` has 81 endpoint entries: 80
-discovered from the public image/video Explore pages and their model families,
-plus one separately documented SOUL Cinema endpoint. This is an inventory of
-the public image/video references at the audit date, not a promise that an
-account has access to every endpoint or that Higgsfield exposes no other models.
+documentation links. Revision `2026-10-21.2` contains **87 inference endpoints**:
+86 from Higgsfield's model inventory plus the separately documented SOUL Cinema
+endpoint. SOUL ID training has its own node and is not counted as inference.
+Account access and media acceptance are still decided by Higgsfield.
 
 The table below is a snapshot of this bundled revision, not a provider-wide
 inventory. The live dropdown in each node is authoritative for the catalog
@@ -418,12 +475,12 @@ choose `1080p` in the resolution dropdown when the selected model supports it.
 | Capability | Bundled examples |
 | --- | --- |
 | Image generation (10) | SOUL, Recraft, Ideogram, Z-Image |
-| Image editing (5) | Marketing Studio, Grok Image |
+| Image editing (8) | SOUL 2 Image to Image, AI Influencer, Ads Studio, Marketing Studio, Grok Image |
 | Text to video (19) | MiniMax H3, Seedance, Kling, Wan, PixVerse |
 | Image to video (22) | MiniMax H3, Seedance, Kling, Wan, PixVerse |
 | Reference to video (15) | MiniMax H3, Seedance, Kling Omni, Wan |
-| Video edit (5) | Genjutsu Motion Transfer, Genjutsu Object Swap, Seedance, Kling |
-| Motion/control (4) | Kling motion-control models, also in Video Edit |
+| Video edit (6) | Genjutsu Motion Transfer, Object Swap, Restyle, Seedance, Kling |
+| Motion/control (6) | Genjutsu Light and Kling motion-control models, also in Video Edit |
 | Video extend (1) | Seedance |
 
 Each public platform entry includes the API reference's JSON input schema.
@@ -433,13 +490,44 @@ panel lists the selected endpoint's media counts and options; the widgets show
 its choices and tooltips. For Kling variants, provider `mode` (such as `std`
 or `pro`) is distinct from the node's `request_mode` (estimate or generate).
 
-A manual catalog refresh downloads the published PRYX catalog, not live model
-pages. Restart ComfyUI afterward so the Python nodes and browser UI use the
-same revision. The scheduled drift check audits the public Higgsfield platform
-references; a partial inventory fails instead of replacing the bundled catalog.
-Remote data is accepted only after schema, ID, endpoint, and documentation
-validation. Account access and media acceptance are ultimately decided by
-Higgsfield.
+### Discovery and automatic updates
+
+Higgsfield now exposes model modes and complete request schemas through
+authenticated **`GET /models?include_schema=true`**. Without `include_schema`,
+schemas are omitted. This integration uses that route with your locally
+configured credentials; no generation request is needed for discovery.
+
+At ComfyUI startup, a background check refreshes the catalog if its cache is
+more than 24 hours old. **Refresh catalog** runs the same check immediately.
+If authenticated discovery fails, the updater falls back to the published,
+reviewed PRYX catalog. Offline installations keep the latest valid local or
+bundled catalog. Updates activate **after restarting ComfyUI**, so a running
+workflow never changes its model schema halfway through execution. Reload the
+browser afterward. Older catalogs cannot replace newer ones.
+
+The repository also checks the public inventory every day at 06:00 UTC.
+Changes run through the Python and frontend tests and open a pull request for
+review; they are not automatically merged. This check needs **no login,
+cookies, or API key**: it uses the public console JSON catalog at
+`dash.higgsfield.ai/api/v2/app-models/`, including per-mode schemas. Public
+model documentation is a fallback. The old page scraper alone was no longer
+reliable after Higgsfield changed its website framework.
+
+Repository setup: automatic PR creation requires **Settings → Actions →
+General → Workflow permissions → Allow GitHub Actions to create and approve
+pull requests**. This repository setting is currently disabled; an owner must
+approve enabling it. The workflow never approves or merges PRs. ComfyUI's
+local API refresh does not depend on this GitHub permission.
+
+Partial inventories, unsafe references, incompatible schemas, and unknown
+output/task mappings are rejected instead of replacing the working catalog.
+New API task types may therefore need a code update as well as a catalog update.
+
+**Upscalers:** no ByteDance/SeedVR or other standalone upscale endpoint was
+listed in the authenticated model inventory, public console catalog, or API
+references checked on October 21, 2026. Website tools are not necessarily API
+products. No guessed upscale endpoint is included; a newly exposed compatible
+API endpoint can be picked up by the discovery checks.
 
 Model availability is capability-specific. A model can be available for one
 Higgsfield task and still be absent from another node when the provider does
@@ -510,6 +598,17 @@ Run `estimate_only` with the exact model and inputs first. Then inspect the
 credits, content policy, media duration, and retention rules can still affect a
 real generation.
 
+### A model's estimate returns HTTP 500
+
+Do not switch off safety checks to bypass an estimate failure. On October 21,
+2026, schema-valid live estimates succeeded for 81 of the 87 inference endpoints;
+21 successful responses contained only a pricing description. The other six
+returned HTTP 500: Kling O3/Omni Video Edit and Kling/V3 Motion Control in both
+standard and pro modes. These observations do not verify paid generation or
+prove that every valid source clip fails. The node stops before submission
+when its estimate fails. Try again later or report the endpoint and sanitized
+error to Higgsfield.
+
 ## Development
 
 Run the local unit and mock integration tests:
@@ -530,6 +629,11 @@ Validate the catalog against the official documentation pages:
 ```powershell
 python tools/sync_platform_catalog.py --catalog pryx_comfyui_higgsfield/catalog/models.json --check --summary
 ```
+
+To check the authenticated inventory instead, add `--authenticated`. It uses
+the configured credentials without printing them. For an offline contract
+review, save a public audit with `--snapshot <path>` and reuse it with
+`--from-snapshot <path>`. Unchanged schemas do not create daily revision churn.
 
 The test suite uses mocks and does not send paid generation requests. A live
 credential smoke test should use an estimate only. A real generation requires

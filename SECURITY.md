@@ -25,6 +25,20 @@ Generation POST requests are not retried after a timeout. Status GET requests
 may be retried with a bounded policy. Test suites do not send generation
 requests.
 
+Inference always estimates before submission. A positive `max_usd` rejects a
+missing or excessive USD estimate; it is not a guarantee about final provider
+billing. Non-finite and negative provider prices are treated as unavailable.
+An estimate failure never falls back to submitting a paid generation.
+
+SOUL ID training uses a separate API lifecycle. Its default `validate_only`
+action is local; `train` explicitly submits a potentially paid training without
+an inference estimate or USD guard. Training POSTs are never retried, and
+ambiguous responses must be checked rather than blindly resubmitted.
+
+Catalog schemas cannot reference remote documents. Automatic updates validate
+the complete inventory and schemas before atomically replacing the cache;
+running workflows keep their startup catalog until ComfyUI restarts.
+
 ## Reporting
 
 Please report a security issue privately to the project maintainer before

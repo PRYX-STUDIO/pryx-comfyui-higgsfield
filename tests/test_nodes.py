@@ -68,7 +68,7 @@ def test_every_active_model_parameter_and_media_kind_has_a_node_input():
     )
     media_parameters = {
         "image_url", "end_image_url", "last_image_url", "first_frame_url", "last_frame_url",
-        "image_urls", "video_url", "video_urls", "audio_url", "audio_urls", "file_url", "link_url",
+        "image_urls", "item_image_urls", "video_url", "video_urls", "audio_url", "audio_urls", "file_url", "link_url",
     }
     end_frame_parameters = {"end_image_url", "last_image_url", "last_frame_url"}
     catalog = runtime_catalog()
@@ -88,7 +88,7 @@ def test_every_active_model_parameter_and_media_kind_has_a_node_input():
                 expected = {
                     "shots_json" if parameter.name == "shots" else parameter.name
                     for parameter in model.parameters
-                    if parameter.name != "prompt" and parameter.name not in media_parameters
+                    if parameter.name not in {"prompt", "brief"} and not parameter.read_only and parameter.name not in media_parameters
                 }
                 assert expected <= available, f"{node_class.__name__} / {model.id}: {expected - available}"
 

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 from collections.abc import Mapping
 from typing import Any
 
@@ -25,6 +26,7 @@ _MEDIA_PARAMETER_NAMES = {
     "first_frame_url",
     "last_frame_url",
     "image_urls",
+    "item_image_urls",
     "video_url",
     "video_urls",
     "audio_url",
@@ -54,7 +56,7 @@ _PARAMETER_HINTS = {
     "multi_shots": "Generate multiple shots when supported by the selected model.",
     "negative_prompt": "Things the model should avoid showing.",
     "output_format": "Output container format supported by the selected model.",
-    "preset_id": "Optional provider preset identifier.",
+    "preset_id": "Provider preset identifier. Required for Genjutsu Restyle; the current preset names are loaded automatically.",
     "quality": "Image quality tier supported by the selected model.",
     "prompt_extend": "Allow the provider to expand the prompt.",
     "prompt_extend_mode": "Provider-specific prompt expansion mode.",
@@ -66,6 +68,17 @@ _PARAMETER_HINTS = {
     "shots": "JSON array of shot descriptions. The selected model defines the maximum count.",
     "style": "Optional provider style value.",
     "style_id": "Optional SOUL style identifier from the Higgsfield style catalog.",
+    "custom_reference_id": "Completed SOUL ID character UUID from the SOUL ID node. It must belong to this account and match the model family.",
+    "custom_reference_strength": "Influence of the selected SOUL ID character. Zero is weakest; one is strongest.",
+    "tier": "AI Influencer character type: normal/freak/total for humans, or an animal type. Appearance choices depend on this selection.",
+    "selection": "AI Influencer appearance choices. Use the appearance picker, or JSON mapping current category keys to option-key arrays. Limits and exclusive choices are checked before upload.",
+    "body_color": "Optional animal body color as #RRGGBB. Omit for human character types.",
+    "pinned_species": "Advanced insect species identifier. Only valid for tier=insects. The public appearance API does not list species IDs; omit unless you have a valid ID.",
+    "trait_variants": "Advanced appearance-v2 JSON overrides. Requires version and choices; animal_choices is only accepted for animal tiers. Normally leave blank.",
+    "variation_index": "Animal variation position. Keep tier and seed fixed to vary the same animal. Human tiers require zero.",
+    "niche": "Optional product or advertising category, maximum 1000 characters.",
+    "language": "Optional language for generated advertising copy, maximum 80 characters.",
+    "target_audience": "Optional audience description for advertising images, maximum 2000 characters.",
 }
 
 
@@ -96,7 +109,7 @@ def _common_generation_inputs() -> dict[str, tuple[Any, dict[str, Any]]]:
                 "min": 0.0,
                 "max": 10000.0,
                 "step": 0.01,
-                "tooltip": "Hard USD limit. Zero disables the limit; no generation is submitted above this value.",
+                "tooltip": "Pre-submission estimate limit. Zero disables it; a positive limit blocks missing or higher USD estimates. Provider final charges may differ from estimates.",
             },
         ),
         "auto_save": (
@@ -214,7 +227,7 @@ def _catalog_parameter_inputs(capability: Capability | tuple[Capability, ...]) -
     for model_id in _models(capability):
         model = _CATALOG.get(model_id)
         for spec in model.parameters:
-            if spec.name == "prompt" or spec.name in _MEDIA_PARAMETER_NAMES:
+            if spec.read_only or spec.name in {"prompt", "brief"} or spec.name in _MEDIA_PARAMETER_NAMES:
                 continue
             existing = specs.get(spec.name)
             if existing is None:
@@ -282,6 +295,11 @@ def _catalog_media_inputs(
             {"tooltip": "Ordered media references. The selected model defines accepted media types and limits."},
         )
 
+    if any("item_image_urls" in model.parameter_map for model in models):
+        inputs["item_images"] = (
+            "IMAGE", {"tooltip": "AI Influencer clothing/object images: up to three, in batch order. The image input is the separate identity photo."},
+        )
+
     end_frame_fields = {"end_image_url", "last_image_url", "last_frame_url"}
     if any(end_frame_fields.intersection(model.parameter_map) for model in models):
         inputs["end_image"] = (
@@ -322,13 +340,19 @@ def _arguments_for_model(model_id: str, values: Mapping[str, Any]) -> dict[str, 
     model = _CATALOG.get(model_id)
     parameters = model.parameter_map
     result: dict[str, Any] = {}
+    if "brief" in parameters and "prompt" not in parameters and values.get("prompt") and not values.get("brief"):
+        result["brief"] = values["prompt"]
     for name, value in values.items():
-        if name not in parameters or value is None:
+        if name not in parameters or parameters[name].read_only or value is None:
             continue
         if isinstance(value, str) and not value.strip():
             continue
         if name == "seed" and value == -1:
             continue
+        if name in {"style_id", "preset_id"} and isinstance(value, str):
+            labelled = re.fullmatch(r".+ \[([0-9a-fA-F-]{36})\]", value)
+            if labelled:
+                value = labelled.group(1)
         if parameters[name].type in {"array", "list", "object", "json"} and isinstance(value, str):
             try:
                 value = json.loads(value)
@@ -356,6 +380,7 @@ def _with_reference_inputs(
     video: Any = None,
     audio: Any = None,
     end_image: Any = None,
+    item_images: Any = None,
     model_id: str | None = None,
 ) -> ReferenceCollection:
     result = ReferenceCollection()
@@ -376,6 +401,11 @@ def _with_reference_inputs(
         result.append(Reference("video", video, label="Direct video", field="video_url" if "video_url" in params else ""))
     if audio is not None:
         result.append(Reference("audio", audio, label="Direct audio"))
+    if item_images is not None:
+        if "item_image_urls" not in params:
+            raise ValidationError("The selected model does not accept separate item images.")
+        result.extend(Reference("image", item, label=f"Item image {index}", field="item_image_urls")
+                      for index, item in enumerate(_split_batch(item_images), 1))
     result.extend(ReferenceCollection(references or ()))
     return result
 
@@ -389,6 +419,7 @@ def _references_from_values(values: dict[str, Any], model_id: str) -> ReferenceC
         video=values.pop("video", None),
         audio=values.pop("audio", None),
         end_image=values.pop("end_image", None),
+        item_images=values.pop("item_images", None),
         model_id=model_id,
     )
 
@@ -560,11 +591,12 @@ class ReferencePreviewNode:
                     "prompt": ("STRING", {"forceInput": True, "tooltip": "Use {{ref:label}} for named references where supported. This preview never uploads or generates."}),
                     "references": (ReferenceCollection.TYPE,),
                     "image": ("IMAGE",), "video": ("VIDEO",), "audio": ("AUDIO",),
+                    "item_images": ("IMAGE", {"tooltip": "AI Influencer clothing/object image batch, separate from the identity image."}),
                     "end_image": ("IMAGE", {"tooltip": "Explicit end frame, only for models supporting it."}),
                 }}
 
-    def preview(self, model, prompt="", references=None, image=None, video=None, audio=None, end_image=None):
-        refs = _with_reference_inputs(references, image=image, video=video, audio=audio, end_image=end_image, model_id=model)
+    def preview(self, model, prompt="", references=None, image=None, video=None, audio=None, end_image=None, item_images=None):
+        refs = _with_reference_inputs(references, image=image, video=video, audio=audio, end_image=end_image, item_images=item_images, model_id=model)
         _, _, info = reference_prompt(_CATALOG.get(model), refs, prompt)
         # Preserve aliases so the receiving generator validates the final mapping again.
         return {"ui": {"text": [info]}, "result": (prompt, refs, model, info)}

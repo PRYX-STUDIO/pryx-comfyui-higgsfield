@@ -90,6 +90,77 @@ test('a dynamic duration dropdown becomes a native, working numeric widget', () 
     assert.strictEqual(context.setWidgetFromParameter(node, widget, parameter), widget);
 });
 
+test('read-only duration and connected brief are not created as editable widgets', () => {
+    const context = fixture();
+    const node = { widgets: [], widgets_values: [] };
+    const parameters = new Map([
+        ['duration', { name: 'duration', type: 'integer', read_only: true }],
+        ['brief', { name: 'brief', type: 'string' }],
+    ]);
+    assert.equal(context.ensureCatalogParameterWidgets(node, parameters), false);
+    assert.equal(node.widgets.length, 0);
+});
+
+test('a saved preset UUID is preserved when named choices arrive', () => {
+    const context = fixture();
+    const uid = 'c2143317-f28d-4c3c-a0b8-39bd547e08a7';
+    const label = `Anime [${uid}]`;
+    const node = makeNode({ name: 'preset_id', type: 'text', value: uid, options: {} });
+    const widget = context.setWidgetFromParameter(node, node.widgets[1], {
+        name: 'preset_id', type: 'string', required: true, choices: [label],
+    });
+    assert.equal(widget.type, 'combo');
+    assert.equal(widget.value, label);
+});
+
+function metadataFixture(requestJson = async () => ({ styles: [] })) {
+    const context = { requestJson, console };
+    vm.createContext(context);
+    const start = source.indexOf('const modelChoicesCache =');
+    const end = source.indexOf('function updateInfluencerControls', start);
+    vm.runInContext(source.slice(start, end), context);
+    return context;
+}
+
+test('Restyle choices come from the current API catalog and are cached per variant', async () => {
+    const calls = [];
+    const context = metadataFixture(async (url) => {
+        calls.push(url);
+        return { styles: [{ style_id: 'uuid', name: 'Anime' }] };
+    });
+    const model = { endpoint: 'higgsfield/genjutsu/restyle/v1.0', parameters: [{ name: 'preset_id', type: 'string', required: true }] };
+    const enriched = await context.modelWithCurrentChoices(model);
+    assert.deepEqual(Array.from(enriched.parameters[0].choices), ['Anime [uuid]']);
+    assert.equal(enriched.parameters[0].required, true);
+    await context.modelWithCurrentChoices(model);
+    assert.deepEqual(calls, ['/pryx-comfyui-higgsfield/styles?variant=genjutsu-restyle']);
+    assert.equal(model.parameters[0].choices, undefined);
+});
+
+test('SOUL style choices keep the optional no-style selection', async () => {
+    const context = metadataFixture(async () => ({ styles: [{ style_id: 'uuid', name: 'Studio' }] }));
+    const model = { endpoint: 'higgsfield-ai/soul/v2/image-to-image', parameters: [{ name: 'style_id', type: 'string' }] };
+    assert.deepEqual(Array.from((await context.modelWithCurrentChoices(model)).parameters[0].choices), ['', 'Studio [uuid]']);
+});
+
+test('an empty preset catalog does not invent a selectable style', async () => {
+    const context = metadataFixture();
+    const model = { endpoint: 'higgsfield/genjutsu/restyle/v1.0', parameters: [{ name: 'preset_id', type: 'string' }] };
+    assert.strictEqual(await context.modelWithCurrentChoices(model), model);
+});
+
+test('appearance categories and options are filtered by the current tier', () => {
+    const context = metadataFixture();
+    const options = { categories: [
+        { key: 'human', tiers: ['normal'], options: [{ key: 'hair', tiers: null }, { key: 'fur', tiers: ['cats'] }] },
+        { key: 'animal', tiers: ['cats'], options: [{ key: 'paws', tiers: null }] },
+    ] };
+    const result = context.applicableAppearanceCategories(options, 'normal');
+    assert.equal(result.length, 1);
+    assert.equal(result[0].key, 'human');
+    assert.deepEqual(Array.from(result[0].options, (item) => item.key), ['hair']);
+});
+
 test('switching the same field back to enumerated durations restores a native dropdown', () => {
     const context = fixture();
     const oldWidget = { name: 'duration', type: 'number', value: 10, options: { min: 5, max: 15, step: 1 } };

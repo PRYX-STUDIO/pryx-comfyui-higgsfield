@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from copy import deepcopy
 from enum import Enum
+import math
 from typing import Any, Iterable, Mapping
 
 
@@ -84,6 +86,8 @@ class ParameterSpec:
     multiple_of: float | None = None
     description: str = ""
     media_types: tuple[str, ...] = ()
+    read_only: bool = False
+    nullable: bool = False
 
     @classmethod
     def from_dict(cls, data: Mapping[str, Any]) -> "ParameterSpec":
@@ -108,6 +112,8 @@ class ParameterSpec:
             multiple_of=data.get("multiple_of", data.get("multipleOf")),
             description=str(data.get("description", "")),
             media_types=tuple(str(item) for item in media_types),
+            read_only=bool(data.get("read_only", False)),
+            nullable=bool(data.get("nullable", False)),
         )
 
     def as_dict(self) -> dict[str, Any]:
@@ -117,7 +123,7 @@ class ParameterSpec:
             "required": self.required,
         }
         if self.default is not None:
-            result["default"] = self.default
+            result["default"] = deepcopy(self.default)
         if self.choices:
             result["choices"] = list(self.choices)
         if self.minimum is not None:
@@ -138,6 +144,10 @@ class ParameterSpec:
             result["description"] = self.description
         if self.media_types:
             result["media_types"] = list(self.media_types)
+        if self.read_only:
+            result["read_only"] = True
+        if self.nullable:
+            result["nullable"] = True
         return result
 
 
@@ -215,7 +225,7 @@ class ModelSpec:
             "notes": list(self.notes),
         }
         if self.input_schema is not None:
-            result["input_schema"] = self.input_schema
+            result["input_schema"] = deepcopy(self.input_schema)
         return result
 
 
@@ -232,7 +242,8 @@ class Estimate:
             if value is None or value == "":
                 return None
             try:
-                return float(value)
+                result = float(value)
+                return result if math.isfinite(result) and result >= 0 else None
             except (TypeError, ValueError):
                 return None
 

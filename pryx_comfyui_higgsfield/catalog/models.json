@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "catalog_version": "2026-09-27.1",
-  "source_date": "2026-09-27",
+  "catalog_version": "2026-10-21.2",
+  "source_date": "2026-10-21",
   "models": [
     {
       "id": "alibaba-happy-horse-image-to-video",
-      "display_name": "Happy horse · Image to Video",
+      "display_name": "Happy Horse 1.0 · Image to Video",
       "provider": "Alibaba",
       "family": "Happy Horse 1.0",
       "endpoint": "alibaba/happy-horse/image-to-video",
@@ -62,7 +62,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/alibaba/happy-horse/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -107,7 +107,7 @@
     },
     {
       "id": "alibaba-happy-horse-reference-to-video",
-      "display_name": "Happy horse · Reference to Video",
+      "display_name": "Happy Horse 1.0 · Reference to Video",
       "provider": "Alibaba",
       "family": "Happy Horse 1.0",
       "endpoint": "alibaba/happy-horse/reference-to-video",
@@ -164,7 +164,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/alibaba/happy-horse/reference-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -213,7 +213,7 @@
     },
     {
       "id": "alibaba-happy-horse-text-to-video",
-      "display_name": "Happy Horse · Text to Video",
+      "display_name": "Happy Horse 1.0 · Text to Video",
       "provider": "Alibaba",
       "family": "Happy Horse 1.0",
       "endpoint": "alibaba/happy-horse/text-to-video",
@@ -273,7 +273,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/alibaba/happy-horse/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -325,7 +325,7 @@
     },
     {
       "id": "alibaba-happy-horse-v1-1-image-to-video",
-      "display_name": "Happy horse · Image to Video",
+      "display_name": "HappyHorse 1.1 · Image to Video",
       "provider": "Alibaba",
       "family": "HappyHorse 1.1",
       "endpoint": "alibaba/happy-horse/v1.1/image-to-video",
@@ -382,7 +382,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/alibaba/happy-horse/v1.1/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -427,7 +427,7 @@
     },
     {
       "id": "alibaba-happy-horse-v1-1-reference-to-video",
-      "display_name": "Happy horse · Reference to Video",
+      "display_name": "HappyHorse 1.1 · Reference to Video",
       "provider": "Alibaba",
       "family": "HappyHorse 1.1",
       "endpoint": "alibaba/happy-horse/v1.1/reference-to-video",
@@ -484,7 +484,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/alibaba/happy-horse/v1.1/reference-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -533,7 +533,7 @@
     },
     {
       "id": "alibaba-happy-horse-v1-1-text-to-video",
-      "display_name": "Happy Horse · Text to Video",
+      "display_name": "HappyHorse 1.1 · Text to Video",
       "provider": "Alibaba",
       "family": "HappyHorse 1.1",
       "endpoint": "alibaba/happy-horse/v1.1/text-to-video",
@@ -593,7 +593,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/alibaba/happy-horse/v1.1/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -645,7 +645,7 @@
     },
     {
       "id": "alibaba-qwen-image-3-edit",
-      "display_name": "Qwen Image 3 Edit",
+      "display_name": "Qwen Image 3 · Edit",
       "provider": "Alibaba",
       "family": "Qwen Image 3",
       "endpoint": "alibaba/qwen-image-3/edit",
@@ -745,7 +745,7 @@
       "max_references": null,
       "result_field": "images",
       "docs_source": "https://open.higgsfield.ai/models/alibaba/qwen-image-3/edit/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -855,7 +855,7 @@
     },
     {
       "id": "alibaba-qwen-image-3-text-to-image",
-      "display_name": "Qwen Image 3 Text to Image",
+      "display_name": "Qwen Image 3 · Text to Image",
       "provider": "Alibaba",
       "family": "Qwen Image 3",
       "endpoint": "alibaba/qwen-image-3/text-to-image",
@@ -943,7 +943,7 @@
       "max_references": null,
       "result_field": "images",
       "docs_source": "https://open.higgsfield.ai/models/alibaba/qwen-image-3/text-to-image/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -1043,7 +1043,7 @@
     },
     {
       "id": "alibaba-wan-3-0-prime-image-to-video",
-      "display_name": "Wan 3.0 Prime Image to Video",
+      "display_name": "Wan 3.0 Prime · Image to Video",
       "provider": "Alibaba",
       "family": "Wan 3.0 Prime Image to Video",
       "endpoint": "alibaba/wan-3.0-prime/image-to-video",
@@ -1139,7 +1139,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -1217,7 +1217,7 @@
     },
     {
       "id": "alibaba-wan-3-0-prime-reference-to-video",
-      "display_name": "Wan 3.0 Prime Reference to Video",
+      "display_name": "Wan 3.0 Prime · Reference to Video",
       "provider": "Alibaba",
       "family": "Wan 3.0 Prime Reference to Video",
       "endpoint": "alibaba/wan-3.0-prime/reference-to-video",
@@ -1323,6 +1323,13 @@
           "description": "Aspect Ratio"
         },
         {
+          "name": "prompt_extend",
+          "type": "boolean",
+          "required": false,
+          "default": false,
+          "description": "Enable Alibaba automatic prompt rewriting. Set false to disable it. Always enabled when file_url or link_url is provided."
+        },
+        {
           "name": "generate_audio",
           "type": "boolean",
           "required": false,
@@ -1347,7 +1354,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/reference-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -1440,6 +1447,12 @@
             "title": "Aspect Ratio",
             "default": "adaptive"
           },
+          "prompt_extend": {
+            "type": "boolean",
+            "title": "Prompt Expansion",
+            "default": false,
+            "description": "Enable Alibaba automatic prompt rewriting. Set false to disable it. Always enabled when file_url or link_url is provided."
+          },
           "generate_audio": {
             "type": "boolean",
             "title": "Sound",
@@ -1455,7 +1468,7 @@
     },
     {
       "id": "alibaba-wan-3-0-prime-text-to-video",
-      "display_name": "Wan 3.0 Prime Text to Video",
+      "display_name": "Wan 3.0 Prime · Text to Video",
       "provider": "Alibaba",
       "family": "Wan 3.0 Prime Text to Video",
       "endpoint": "alibaba/wan-3.0-prime/text-to-video",
@@ -1531,7 +1544,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -1694,7 +1707,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/alibaba/wan-3.0/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -1878,6 +1891,13 @@
           "description": "Aspect Ratio"
         },
         {
+          "name": "prompt_extend",
+          "type": "boolean",
+          "required": false,
+          "default": false,
+          "description": "Enable Alibaba automatic prompt rewriting. Set false to disable it. Always enabled when file_url or link_url is provided."
+        },
+        {
           "name": "generate_audio",
           "type": "boolean",
           "required": false,
@@ -1902,7 +1922,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/alibaba/wan-3.0/reference-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [
         "Provide at least one reference input. `file_url` and `link_url` are mutually exclusive."
@@ -1997,6 +2017,12 @@
             "title": "Aspect Ratio",
             "default": "adaptive"
           },
+          "prompt_extend": {
+            "type": "boolean",
+            "title": "Prompt Expansion",
+            "default": false,
+            "description": "Enable Alibaba automatic prompt rewriting. Set false to disable it. Always enabled when file_url or link_url is provided."
+          },
           "generate_audio": {
             "type": "boolean",
             "title": "Sound",
@@ -2088,7 +2114,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/alibaba/wan-3.0/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -2223,7 +2249,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/bytedance/seedance-2.0/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [
         "Use public media URLs; `asset://` references are not supported. Framing follows the input image. Do not send reference arrays or `video_url`. Automatic duration (`-1`) is not supported."
@@ -2273,7 +2299,7 @@
     },
     {
       "id": "seedance-2-reference-to-video",
-      "display_name": "Seedance 2.0 · Reference to Video",
+      "display_name": "Seedance 2.0 · Reference to Video (with video reference)",
       "provider": "ByteDance",
       "family": "Seedance 2.0",
       "endpoint": "bytedance/seedance-2.0/reference-to-video",
@@ -2373,7 +2399,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/bytedance/seedance-2.0/reference-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [
         "Use public media URLs; `asset://` references are not supported. Provide at least one reference image or video. Set an explicit `aspect_ratio`. Automatic duration (`-1`) is not supported."
@@ -2525,7 +2551,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/bytedance/seedance-2.0/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [
         "This endpoint does not accept media inputs. Automatic duration (`-1`) is not supported."
@@ -2657,7 +2683,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/bytedance/seedance-2.5/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [
         "Use public media URLs; `asset://` references are not supported. Framing follows the input image. Do not send reference arrays or `video_url`. Automatic duration (`-1`) is not supported."
@@ -2714,7 +2740,7 @@
     },
     {
       "id": "seedance-2-5-reference-to-video",
-      "display_name": "Seedance 2.5 · Reference to Video",
+      "display_name": "Seedance 2.5 · Reference to Video (with video reference)",
       "provider": "ByteDance",
       "family": "Seedance 2.5",
       "endpoint": "bytedance/seedance-2.5/reference-to-video",
@@ -2824,7 +2850,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/bytedance/seedance-2.5/reference-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [
         "Use public media URLs; `asset://` references are not supported. Provide at least one reference image, video, or audio file. Set an explicit `aspect_ratio`. Automatic duration (`-1`) is not supported."
@@ -3011,7 +3037,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/bytedance/seedance-2.5/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [
         "This endpoint does not accept media inputs. Automatic duration (`-1`) is not supported."
@@ -3175,7 +3201,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/bytedance/seedance-2.5/video-edit/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [
         "Use public media URLs; `asset://` references are not supported. Framing follows the source video. First/last-frame inputs are not accepted. Omit `duration`; the source video determines output length."
@@ -3354,7 +3380,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/bytedance/seedance-2.5/video-extend/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [
         "Use public media URLs; `asset://` references are not supported. Framing follows the source video. First/last-frame inputs are not accepted. Automatic duration (`-1`) is not supported."
@@ -3434,8 +3460,177 @@
       }
     },
     {
+      "id": "soul-cinema",
+      "display_name": "SOUL Cinema",
+      "provider": "Higgsfield",
+      "family": "SOUL",
+      "endpoint": "higgsfield-ai/soul/cinema",
+      "capability": "image_generate",
+      "output": "image",
+      "parameters": [
+        {
+          "name": "prompt",
+          "type": "string",
+          "required": true,
+          "description": "Prompt"
+        },
+        {
+          "name": "aspect_ratio",
+          "type": "string",
+          "required": false,
+          "default": "1:1",
+          "choices": [
+            "9:16",
+            "16:9",
+            "4:3",
+            "3:4",
+            "1:1",
+            "2:3",
+            "3:2"
+          ],
+          "description": "Aspect Ratio"
+        },
+        {
+          "name": "enhance_prompt",
+          "type": "boolean",
+          "required": false,
+          "default": false,
+          "description": "Enhance Prompt"
+        },
+        {
+          "name": "resolution",
+          "type": "string",
+          "required": false,
+          "default": "720p",
+          "choices": [
+            "720p",
+            "1080p"
+          ],
+          "description": "Resolution"
+        },
+        {
+          "name": "custom_reference_id",
+          "type": "string",
+          "required": false,
+          "nullable": true,
+          "description": "Custom Reference Id"
+        },
+        {
+          "name": "custom_reference_strength",
+          "type": "number",
+          "required": false,
+          "default": 1.0,
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Custom Reference Strength"
+        },
+        {
+          "name": "seed",
+          "type": "integer",
+          "required": false,
+          "minimum": 1,
+          "maximum": 1000000,
+          "description": "Seed"
+        },
+        {
+          "name": "batch_size",
+          "type": "integer",
+          "required": false,
+          "default": 1,
+          "choices": [
+            1,
+            4
+          ],
+          "description": "Batch Size"
+        }
+      ],
+      "input_media": [],
+      "max_references": null,
+      "result_field": "images",
+      "docs_source": "https://docs.higgsfield.ai/docs/models/soul-cinema/generate",
+      "docs_checked": "2026-10-21",
+      "status": "active",
+      "notes": [],
+      "input_schema": {
+        "properties": {
+          "prompt": {
+            "title": "Prompt",
+            "type": "string"
+          },
+          "aspect_ratio": {
+            "default": "1:1",
+            "enum": [
+              "9:16",
+              "16:9",
+              "4:3",
+              "3:4",
+              "1:1",
+              "2:3",
+              "3:2"
+            ],
+            "title": "Aspect Ratio",
+            "type": "string"
+          },
+          "enhance_prompt": {
+            "default": false,
+            "title": "Enhance Prompt",
+            "type": "boolean"
+          },
+          "resolution": {
+            "default": "720p",
+            "enum": [
+              "720p",
+              "1080p"
+            ],
+            "title": "Resolution",
+            "type": "string"
+          },
+          "custom_reference_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Custom Reference Id"
+          },
+          "custom_reference_strength": {
+            "default": 1.0,
+            "maximum": 1,
+            "minimum": 0,
+            "title": "Custom Reference Strength",
+            "type": "number"
+          },
+          "seed": {
+            "maximum": 1000000,
+            "minimum": 1,
+            "title": "Seed",
+            "type": "integer"
+          },
+          "batch_size": {
+            "default": 1,
+            "enum": [
+              1,
+              4
+            ],
+            "title": "Batch Size",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "prompt"
+        ],
+        "title": "SoulCinemaParamsSchema",
+        "type": "object"
+      }
+    },
+    {
       "id": "soul-standard",
-      "display_name": "SOUL",
+      "display_name": "Soul Standard",
       "provider": "Higgsfield",
       "family": "SOUL",
       "endpoint": "higgsfield-ai/soul/standard",
@@ -3446,7 +3641,6 @@
           "name": "seed",
           "type": "integer",
           "required": false,
-          "default": null,
           "minimum": 1,
           "maximum": 1000000,
           "description": "Seed"
@@ -3461,7 +3655,6 @@
           "name": "style_id",
           "type": "string",
           "required": false,
-          "default": null,
           "description": "Soul Style"
         },
         {
@@ -3523,7 +3716,7 @@
       "max_references": null,
       "result_field": "images",
       "docs_source": "https://open.higgsfield.ai/models/higgsfield-ai/soul/standard/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -3600,8 +3793,207 @@
       }
     },
     {
+      "id": "higgsfield-ai-soul-v2-image-to-image",
+      "display_name": "Soul 2 · Image to Image",
+      "provider": "Higgsfield",
+      "family": "Soul 2",
+      "endpoint": "higgsfield-ai/soul/v2/image-to-image",
+      "capability": "image_edit",
+      "output": "image",
+      "parameters": [
+        {
+          "name": "seed",
+          "type": "integer",
+          "required": false,
+          "minimum": 1,
+          "maximum": 1000000,
+          "description": "Seed"
+        },
+        {
+          "name": "prompt",
+          "type": "string",
+          "required": true,
+          "description": "Write your prompt here"
+        },
+        {
+          "name": "style_id",
+          "type": "string",
+          "required": false,
+          "description": "Soul Style"
+        },
+        {
+          "name": "image_url",
+          "type": "string",
+          "required": true,
+          "min_length": 1,
+          "description": "Reference image",
+          "media_types": [
+            "image"
+          ]
+        },
+        {
+          "name": "batch_size",
+          "type": "integer",
+          "required": false,
+          "default": 1,
+          "choices": [
+            1,
+            4
+          ],
+          "description": "Result images"
+        },
+        {
+          "name": "resolution",
+          "type": "string",
+          "required": false,
+          "default": "720p",
+          "choices": [
+            "720p",
+            "1080p"
+          ],
+          "description": "Resolution"
+        },
+        {
+          "name": "aspect_ratio",
+          "type": "string",
+          "required": false,
+          "default": "4:3",
+          "choices": [
+            "9:16",
+            "16:9",
+            "4:3",
+            "3:4",
+            "1:1",
+            "2:3",
+            "3:2"
+          ],
+          "description": "Aspect Ratio"
+        },
+        {
+          "name": "enhance_prompt",
+          "type": "boolean",
+          "required": false,
+          "default": true,
+          "description": "Enhance Prompt"
+        },
+        {
+          "name": "custom_reference_id",
+          "type": "string",
+          "required": false,
+          "nullable": true,
+          "description": "ID of a completed Soul ID trained with model_version v2 in your API account. Create one using POST /v1/custom-references."
+        },
+        {
+          "name": "custom_reference_strength",
+          "type": "number",
+          "required": false,
+          "default": 1.0,
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Strength of the custom reference, from 0 to 1. Used when custom_reference_id is provided."
+        }
+      ],
+      "input_media": [
+        "image"
+      ],
+      "max_references": null,
+      "result_field": "images",
+      "docs_source": "https://open.higgsfield.ai/models/higgsfield-ai/soul/v2/image-to-image/api-reference",
+      "docs_checked": "2026-10-21",
+      "status": "active",
+      "notes": [],
+      "input_schema": {
+        "type": "object",
+        "title": "Soul V2 Image to Image",
+        "required": [
+          "prompt",
+          "image_url"
+        ],
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "title": "Seed",
+            "default": null,
+            "maximum": 1000000,
+            "minimum": 1
+          },
+          "prompt": {
+            "type": "string",
+            "title": "Prompt",
+            "description": "Write your prompt here"
+          },
+          "style_id": {
+            "type": "string",
+            "title": "Soul Style",
+            "format": "uuid"
+          },
+          "image_url": {
+            "type": "string",
+            "title": "Reference image",
+            "format": "uri",
+            "minLength": 1
+          },
+          "batch_size": {
+            "enum": [
+              1,
+              4
+            ],
+            "type": "integer",
+            "title": "Result images",
+            "default": 1
+          },
+          "resolution": {
+            "enum": [
+              "720p",
+              "1080p"
+            ],
+            "type": "string",
+            "title": "Resolution",
+            "default": "720p"
+          },
+          "aspect_ratio": {
+            "enum": [
+              "9:16",
+              "16:9",
+              "4:3",
+              "3:4",
+              "1:1",
+              "2:3",
+              "3:2"
+            ],
+            "type": "string",
+            "title": "Aspect Ratio",
+            "default": "4:3"
+          },
+          "enhance_prompt": {
+            "type": "boolean",
+            "title": "Enhance Prompt",
+            "default": true
+          },
+          "custom_reference_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "title": "Soul ID",
+            "format": "uuid",
+            "default": null,
+            "description": "ID of a completed Soul ID trained with model_version v2 in your API account. Create one using POST /v1/custom-references."
+          },
+          "custom_reference_strength": {
+            "type": "number",
+            "title": "Soul ID strength",
+            "default": 1.0,
+            "maximum": 1,
+            "minimum": 0,
+            "description": "Strength of the custom reference, from 0 to 1. Used when custom_reference_id is provided."
+          }
+        }
+      }
+    },
+    {
       "id": "soul-2",
-      "display_name": "SOUL 2",
+      "display_name": "Soul 2 · Text to Image",
       "provider": "Higgsfield",
       "family": "SOUL",
       "endpoint": "higgsfield-ai/soul/v2/standard",
@@ -3612,7 +4004,6 @@
           "name": "seed",
           "type": "integer",
           "required": false,
-          "default": null,
           "minimum": 1,
           "maximum": 1000000,
           "description": "Seed"
@@ -3673,13 +4064,29 @@
           "required": false,
           "default": true,
           "description": "Enhance Prompt"
+        },
+        {
+          "name": "custom_reference_id",
+          "type": "string",
+          "required": false,
+          "nullable": true,
+          "description": "ID of a completed Soul ID trained with model_version v2 in your API account. Create one using POST /v1/custom-references."
+        },
+        {
+          "name": "custom_reference_strength",
+          "type": "number",
+          "required": false,
+          "default": 1.0,
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Strength of the custom reference, from 0 to 1. Used when custom_reference_id is provided."
         }
       ],
       "input_media": [],
       "max_references": null,
       "result_field": "images",
       "docs_source": "https://open.higgsfield.ai/models/higgsfield-ai/soul/v2/standard/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -3742,13 +4149,533 @@
             "type": "boolean",
             "title": "Enhance Prompt",
             "default": true
+          },
+          "custom_reference_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "title": "Soul ID",
+            "format": "uuid",
+            "default": null,
+            "description": "ID of a completed Soul ID trained with model_version v2 in your API account. Create one using POST /v1/custom-references."
+          },
+          "custom_reference_strength": {
+            "type": "number",
+            "title": "Soul ID strength",
+            "default": 1.0,
+            "maximum": 1,
+            "minimum": 0,
+            "description": "Strength of the custom reference, from 0 to 1. Used when custom_reference_id is provided."
           }
         }
       }
     },
     {
+      "id": "higgsfield-ads-studio-v1-0",
+      "display_name": "Ads Studio",
+      "provider": "Higgsfield",
+      "family": "Ads Studio",
+      "endpoint": "higgsfield/ads-studio/v1.0",
+      "capability": "image_generate",
+      "output": "image",
+      "parameters": [
+        {
+          "name": "niche",
+          "type": "string",
+          "required": false,
+          "default": "",
+          "max_length": 1000,
+          "description": "niche"
+        },
+        {
+          "name": "prompt",
+          "type": "string",
+          "required": true,
+          "min_length": 1,
+          "max_length": 8000,
+          "description": "prompt"
+        },
+        {
+          "name": "language",
+          "type": "string",
+          "required": false,
+          "default": "",
+          "max_length": 80,
+          "description": "language"
+        },
+        {
+          "name": "batch_size",
+          "type": "integer",
+          "required": false,
+          "default": 1,
+          "minimum": 1,
+          "maximum": 8,
+          "description": "batch_size"
+        },
+        {
+          "name": "image_urls",
+          "type": "array",
+          "required": false,
+          "default": [],
+          "max_items": 10,
+          "description": "image_urls",
+          "media_types": [
+            "image"
+          ]
+        },
+        {
+          "name": "aspect_ratio",
+          "type": "string",
+          "required": false,
+          "default": "1:1",
+          "choices": [
+            "1:1",
+            "4:5",
+            "5:4",
+            "16:9",
+            "9:16",
+            "4:3",
+            "3:4",
+            "21:9",
+            "3:2",
+            "2:3",
+            "2:1",
+            "1:2"
+          ],
+          "description": "aspect_ratio"
+        },
+        {
+          "name": "target_audience",
+          "type": "string",
+          "required": false,
+          "default": "",
+          "max_length": 2000,
+          "description": "target_audience"
+        }
+      ],
+      "input_media": [
+        "image"
+      ],
+      "max_references": null,
+      "result_field": "images",
+      "docs_source": "https://open.higgsfield.ai/models/higgsfield/ads-studio/v1.0/api-reference",
+      "docs_checked": "2026-10-21",
+      "status": "active",
+      "notes": [
+        "Generate 1–8 advertising images from a brief, with up to 10 product/reference images. Optional language, niche and target audience. Token-based billing is reconciled after completion; an estimate is not a final price."
+      ],
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "prompt"
+        ],
+        "properties": {
+          "niche": {
+            "type": "string",
+            "default": "",
+            "maxLength": 1000
+          },
+          "prompt": {
+            "type": "string",
+            "pattern": "\\S",
+            "maxLength": 8000,
+            "minLength": 1
+          },
+          "language": {
+            "type": "string",
+            "default": "",
+            "maxLength": 80
+          },
+          "batch_size": {
+            "type": "integer",
+            "default": 1,
+            "maximum": 8,
+            "minimum": 1
+          },
+          "image_urls": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^https?://",
+              "maxLength": 8192,
+              "minLength": 1
+            },
+            "default": [],
+            "maxItems": 10
+          },
+          "aspect_ratio": {
+            "enum": [
+              "1:1",
+              "4:5",
+              "5:4",
+              "16:9",
+              "9:16",
+              "4:3",
+              "3:4",
+              "21:9",
+              "3:2",
+              "2:3",
+              "2:1",
+              "1:2"
+            ],
+            "type": "string",
+            "default": "1:1"
+          },
+          "target_audience": {
+            "type": "string",
+            "default": "",
+            "maxLength": 2000
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "higgsfield-ai-influencer",
+      "display_name": "AI Influencer",
+      "provider": "Higgsfield",
+      "family": "AI Influencer",
+      "endpoint": "higgsfield/ai-influencer",
+      "capability": "image_edit",
+      "output": "image",
+      "parameters": [
+        {
+          "name": "seed",
+          "type": "integer",
+          "required": false,
+          "nullable": true,
+          "minimum": 1,
+          "maximum": 1000000,
+          "description": "seed"
+        },
+        {
+          "name": "tier",
+          "type": "string",
+          "required": false,
+          "default": "normal",
+          "choices": [
+            "normal",
+            "freak",
+            "total",
+            "insects",
+            "frogs",
+            "cats",
+            "dogs",
+            "capybaras",
+            "birds"
+          ],
+          "description": "tier"
+        },
+        {
+          "name": "brief",
+          "type": "string",
+          "required": false,
+          "default": "",
+          "max_length": 4000,
+          "description": "brief"
+        },
+        {
+          "name": "image_url",
+          "type": "string",
+          "required": false,
+          "nullable": true,
+          "min_length": 1,
+          "max_length": 2083,
+          "description": "image_url",
+          "media_types": [
+            "image"
+          ]
+        },
+        {
+          "name": "selection",
+          "type": "object",
+          "required": false,
+          "default": {},
+          "description": "selection"
+        },
+        {
+          "name": "body_color",
+          "type": "string",
+          "required": false,
+          "nullable": true,
+          "description": "body_color"
+        },
+        {
+          "name": "pinned_species",
+          "type": "string",
+          "required": false,
+          "nullable": true,
+          "min_length": 1,
+          "max_length": 64,
+          "description": "pinned_species"
+        },
+        {
+          "name": "trait_variants",
+          "type": "object",
+          "required": false,
+          "nullable": true,
+          "description": "trait_variants"
+        },
+        {
+          "name": "item_image_urls",
+          "type": "array",
+          "required": false,
+          "default": [],
+          "max_items": 3,
+          "description": "item_image_urls",
+          "media_types": [
+            "image"
+          ]
+        },
+        {
+          "name": "variation_index",
+          "type": "integer",
+          "required": false,
+          "default": 0,
+          "minimum": 0,
+          "maximum": 2147483647,
+          "description": "variation_index"
+        }
+      ],
+      "input_media": [
+        "image"
+      ],
+      "max_references": null,
+      "result_field": "images",
+      "docs_source": "https://open.higgsfield.ai/models/higgsfield/ai-influencer/api-reference",
+      "docs_checked": "2026-10-21",
+      "status": "active",
+      "notes": [
+        "Connect one identity photo to image. Connect up to three clothing/object references to item_images (batch) or References. These are separate roles; the identity photo does not count toward the three-item limit. Connected prompt text maps to brief (maximum 4000 characters).",
+        "Human tiers: normal, freak, total. Animal tiers: insects, frogs, cats, dogs, capybaras, birds. Human tiers require variation_index=0 and no body_color/pinned_species. pinned_species is only valid for insects. Appearance selection uses current category/option keys from the model options API; advanced trait overrides require valid provider identifiers."
+      ],
+      "input_schema": {
+        "type": "object",
+        "$defs": {
+          "TraitVariants": {
+            "type": "object",
+            "title": "TraitVariants",
+            "required": [
+              "version",
+              "choices"
+            ],
+            "properties": {
+              "choices": {
+                "type": "object",
+                "title": "Choices",
+                "properties": {
+                  "pr_centaur": {
+                    "enum": [
+                      "v1",
+                      "v2",
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6",
+                      "v7",
+                      "v8",
+                      "v9",
+                      "v10"
+                    ]
+                  }
+                },
+                "maxProperties": 512,
+                "additionalProperties": {
+                  "enum": [
+                    "original",
+                    "v1",
+                    "v2",
+                    "v3",
+                    "v4",
+                    "v5"
+                  ],
+                  "type": "string"
+                }
+              },
+              "version": {
+                "type": "string",
+                "const": "appearance-v2",
+                "title": "Version"
+              },
+              "animal_choices": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "maxProperties": 64,
+                    "additionalProperties": {
+                      "type": "integer",
+                      "maximum": 4,
+                      "minimum": 0
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Animal Choices",
+                "default": null
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "tier": {
+                  "enum": [
+                    "normal",
+                    "freak",
+                    "total"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "body_color": {
+                  "type": "null"
+                },
+                "pinned_species": {
+                  "type": "null"
+                },
+                "trait_variants": {
+                  "properties": {
+                    "animal_choices": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "variation_index": {
+                  "const": 0
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "tier": {
+                  "not": {
+                    "const": "insects"
+                  }
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "pinned_species": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        ],
+        "title": "AI Influencer input",
+        "properties": {
+          "seed": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "default": null,
+            "maximum": 1000000,
+            "minimum": 1
+          },
+          "tier": {
+            "enum": [
+              "normal",
+              "freak",
+              "total",
+              "insects",
+              "frogs",
+              "cats",
+              "dogs",
+              "capybaras",
+              "birds"
+            ],
+            "type": "string",
+            "default": "normal"
+          },
+          "brief": {
+            "type": "string",
+            "title": "",
+            "default": "",
+            "maxLength": 4000
+          },
+          "image_url": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri",
+            "default": null,
+            "maxLength": 2083,
+            "minLength": 1
+          },
+          "selection": {
+            "type": "object",
+            "default": {},
+            "maxProperties": 18,
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "body_color": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^#[0-9a-fA-F]{6}$"
+          },
+          "pinned_species": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 64,
+            "minLength": 1
+          },
+          "trait_variants": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/TraitVariants"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "item_image_urls": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri",
+              "maxLength": 2083,
+              "minLength": 1
+            },
+            "default": [],
+            "maxItems": 3
+          },
+          "variation_index": {
+            "type": "integer",
+            "default": 0,
+            "maximum": 2147483647,
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
       "id": "higgsfield-cinema-studio-4-0",
-      "display_name": "higgsfield/cinema-studio/4.0",
+      "display_name": "Cinema Studio 4.0",
       "provider": "Higgsfield",
       "family": "higgsfield/cinema-studio/4.0",
       "endpoint": "higgsfield/cinema-studio/4.0",
@@ -4031,7 +4958,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/higgsfield/cinema-studio/4.0/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -4265,6 +5192,262 @@
       }
     },
     {
+      "id": "higgsfield-genjutsu-light-motion-transfer-v1-0",
+      "display_name": "Genjutsu Light · Motion Transfer",
+      "provider": "Higgsfield",
+      "family": "Genjutsu Light",
+      "endpoint": "higgsfield/genjutsu-light/motion-transfer/v1.0",
+      "capability": "video_motion",
+      "output": "video",
+      "parameters": [
+        {
+          "name": "prompt",
+          "type": "string",
+          "required": false,
+          "default": "",
+          "max_length": 10000,
+          "description": "Prompt"
+        },
+        {
+          "name": "duration",
+          "type": "integer",
+          "required": false,
+          "read_only": true,
+          "minimum": 4,
+          "maximum": 15,
+          "description": "Computed from the source video, rounded up to whole seconds, capped at 15 seconds. User-supplied values do not control output duration."
+        },
+        {
+          "name": "video_url",
+          "type": "string",
+          "required": true,
+          "min_length": 1,
+          "max_length": 2083,
+          "description": "Video Url",
+          "media_types": [
+            "video"
+          ]
+        },
+        {
+          "name": "image_urls",
+          "type": "array",
+          "required": true,
+          "min_items": 1,
+          "max_items": 8,
+          "description": "Image Urls",
+          "media_types": [
+            "image"
+          ]
+        },
+        {
+          "name": "resolution",
+          "type": "string",
+          "required": false,
+          "default": "720p",
+          "choices": [
+            "720p",
+            "480p",
+            "1080p"
+          ],
+          "description": "Resolution"
+        }
+      ],
+      "input_media": [
+        "image",
+        "video"
+      ],
+      "max_references": null,
+      "result_field": "video",
+      "docs_source": "https://open.higgsfield.ai/models/higgsfield/genjutsu-light/motion-transfer/v1.0/api-reference",
+      "docs_checked": "2026-10-21",
+      "status": "active",
+      "notes": [
+        "Connect one source video and 1–8 reference images. Source audio is preserved. Duration is derived from the source, rounded up to whole seconds, capped at 15 seconds; it is not an editable input."
+      ],
+      "input_schema": {
+        "type": "object",
+        "title": "MotionTransferParams",
+        "required": [
+          "video_url",
+          "image_urls"
+        ],
+        "properties": {
+          "prompt": {
+            "type": "string",
+            "title": "Prompt",
+            "default": "",
+            "maxLength": 10000
+          },
+          "duration": {
+            "type": "integer",
+            "title": "Duration",
+            "maximum": 15,
+            "minimum": 4,
+            "readOnly": true,
+            "description": "Computed from the source video, rounded up to whole seconds, capped at 15 seconds. User-supplied values do not control output duration."
+          },
+          "video_url": {
+            "type": "string",
+            "title": "Video Url",
+            "format": "uri",
+            "maxLength": 2083,
+            "minLength": 1
+          },
+          "image_urls": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri",
+              "maxLength": 2083,
+              "minLength": 1
+            },
+            "title": "Image Urls",
+            "maxItems": 8,
+            "minItems": 1
+          },
+          "resolution": {
+            "enum": [
+              "720p",
+              "480p",
+              "1080p"
+            ],
+            "type": "string",
+            "title": "Resolution",
+            "default": "720p"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "higgsfield-genjutsu-light-object-swap-v1-0",
+      "display_name": "Genjutsu Light · Object Swap",
+      "provider": "Higgsfield",
+      "family": "Genjutsu Light",
+      "endpoint": "higgsfield/genjutsu-light/object-swap/v1.0",
+      "capability": "video_motion",
+      "output": "video",
+      "parameters": [
+        {
+          "name": "prompt",
+          "type": "string",
+          "required": false,
+          "default": "",
+          "max_length": 10000,
+          "description": "Prompt"
+        },
+        {
+          "name": "duration",
+          "type": "integer",
+          "required": false,
+          "read_only": true,
+          "minimum": 4,
+          "maximum": 15,
+          "description": "Computed from the source video, rounded up to whole seconds, capped at 15 seconds. User-supplied values do not control output duration."
+        },
+        {
+          "name": "video_url",
+          "type": "string",
+          "required": true,
+          "min_length": 1,
+          "max_length": 2083,
+          "description": "Video Url",
+          "media_types": [
+            "video"
+          ]
+        },
+        {
+          "name": "image_urls",
+          "type": "array",
+          "required": true,
+          "min_items": 1,
+          "max_items": 8,
+          "description": "Image Urls",
+          "media_types": [
+            "image"
+          ]
+        },
+        {
+          "name": "resolution",
+          "type": "string",
+          "required": false,
+          "default": "720p",
+          "choices": [
+            "720p",
+            "480p",
+            "1080p"
+          ],
+          "description": "Resolution"
+        }
+      ],
+      "input_media": [
+        "image",
+        "video"
+      ],
+      "max_references": null,
+      "result_field": "video",
+      "docs_source": "https://open.higgsfield.ai/models/higgsfield/genjutsu-light/object-swap/v1.0/api-reference",
+      "docs_checked": "2026-10-21",
+      "status": "active",
+      "notes": [
+        "Connect one source video and 1–8 reference images. Source audio is preserved. Duration is derived from the source, rounded up to whole seconds, capped at 15 seconds; it is not an editable input."
+      ],
+      "input_schema": {
+        "type": "object",
+        "title": "ObjectSwapParams",
+        "required": [
+          "video_url",
+          "image_urls"
+        ],
+        "properties": {
+          "prompt": {
+            "type": "string",
+            "title": "Prompt",
+            "default": "",
+            "maxLength": 10000
+          },
+          "duration": {
+            "type": "integer",
+            "title": "Duration",
+            "maximum": 15,
+            "minimum": 4,
+            "readOnly": true,
+            "description": "Computed from the source video, rounded up to whole seconds, capped at 15 seconds. User-supplied values do not control output duration."
+          },
+          "video_url": {
+            "type": "string",
+            "title": "Video Url",
+            "format": "uri",
+            "maxLength": 2083,
+            "minLength": 1
+          },
+          "image_urls": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri",
+              "maxLength": 2083,
+              "minLength": 1
+            },
+            "title": "Image Urls",
+            "maxItems": 8,
+            "minItems": 1
+          },
+          "resolution": {
+            "enum": [
+              "720p",
+              "480p",
+              "1080p"
+            ],
+            "type": "string",
+            "title": "Resolution",
+            "default": "720p"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
       "id": "higgsfield-genjutsu-motion-transfer-v1-0",
       "display_name": "Genjutsu · Motion Transfer",
       "provider": "Higgsfield",
@@ -4323,7 +5506,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/higgsfield/genjutsu/motion-transfer/v1.0/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [
         "Motion Transfer uses one source video plus 1–8 character images; the source video supplies the motion. The API has no separate duration field. Choose 480p or 720p."
@@ -4434,7 +5617,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/higgsfield/genjutsu/object-swap/v1.0/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [
         "Object Swap uses one source video plus 1–8 target images for characters, products, or clothes. The API has no separate duration field. Choose 480p or 720p."
@@ -4487,12 +5670,133 @@
       }
     },
     {
+      "id": "higgsfield-genjutsu-restyle-v1-0",
+      "display_name": "Genjutsu · Restyle",
+      "provider": "Higgsfield",
+      "family": "Genjutsu",
+      "endpoint": "higgsfield/genjutsu/restyle/v1.0",
+      "capability": "video_edit",
+      "output": "video",
+      "parameters": [
+        {
+          "name": "prompt",
+          "type": "string",
+          "required": false,
+          "default": "",
+          "max_length": 10000,
+          "description": "Prompt"
+        },
+        {
+          "name": "preset_id",
+          "type": "string",
+          "required": true,
+          "description": "Style preset"
+        },
+        {
+          "name": "video_url",
+          "type": "string",
+          "required": true,
+          "min_length": 1,
+          "description": "Source video, 4–30 seconds. Longer videos are trimmed to 30 seconds.",
+          "media_types": [
+            "video"
+          ]
+        },
+        {
+          "name": "image_urls",
+          "type": "array",
+          "required": false,
+          "default": [],
+          "max_items": 5,
+          "description": "Optional character references. Leave empty to restyle the source frame.",
+          "media_types": [
+            "image"
+          ]
+        },
+        {
+          "name": "resolution",
+          "type": "string",
+          "required": false,
+          "default": "720p",
+          "choices": [
+            "480p",
+            "720p",
+            "1080p"
+          ],
+          "description": "Resolution"
+        }
+      ],
+      "input_media": [
+        "image",
+        "video"
+      ],
+      "max_references": null,
+      "result_field": "video",
+      "docs_source": "https://open.higgsfield.ai/models/higgsfield/genjutsu/restyle/v1.0/api-reference",
+      "docs_checked": "2026-10-21",
+      "status": "active",
+      "notes": [
+        "Choose one current style preset. Source video: minimum 4 seconds, maximum download 200 MiB; longer clips are trimmed to the first 30 seconds. Optional character images: 0–5, maximum 64 MiB each. Motion and source audio are retained; framing and cadence are derived from the source/preset. No duration, FPS or audio-generation control is exposed."
+      ],
+      "input_schema": {
+        "type": "object",
+        "title": "Genjutsu Restyle",
+        "required": [
+          "video_url",
+          "preset_id"
+        ],
+        "properties": {
+          "prompt": {
+            "type": "string",
+            "title": "Prompt",
+            "default": "",
+            "maxLength": 10000
+          },
+          "preset_id": {
+            "type": "string",
+            "title": "Style preset",
+            "format": "uuid"
+          },
+          "video_url": {
+            "type": "string",
+            "title": "Source video",
+            "format": "uri",
+            "minLength": 1,
+            "description": "Source video, 4–30 seconds. Longer videos are trimmed to 30 seconds."
+          },
+          "image_urls": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri",
+              "minLength": 1
+            },
+            "title": "Character images",
+            "default": [],
+            "maxItems": 5,
+            "description": "Optional character references. Leave empty to restyle the source frame."
+          },
+          "resolution": {
+            "enum": [
+              "480p",
+              "720p",
+              "1080p"
+            ],
+            "type": "string",
+            "title": "Resolution",
+            "default": "720p"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
       "id": "ideogram-v4-0",
       "display_name": "Ideogram 4.0",
       "provider": "Ideogram",
       "family": "ideogram/v4.0",
       "endpoint": "ideogram/v4.0",
-      "capability": "image_generate",
+      "capability": "image_edit",
       "output": "image",
       "parameters": [
         {
@@ -4571,7 +5875,7 @@
       "max_references": null,
       "result_field": "images",
       "docs_source": "https://open.higgsfield.ai/models/ideogram/v4.0/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -4646,7 +5950,7 @@
     },
     {
       "id": "kling-video-motion-control-pro",
-      "display_name": "Kling Motion Control · Motion Control (Pro)",
+      "display_name": "Kling 2.6 · Motion Control (Pro)",
       "provider": "Kling Video",
       "family": "Kling 2.6",
       "endpoint": "kling-video/motion-control/pro",
@@ -4708,7 +6012,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/motion-control/pro/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -4759,7 +6063,7 @@
     },
     {
       "id": "kling-video-motion-control-std",
-      "display_name": "Kling Motion Control · Motion Control (Standard)",
+      "display_name": "Kling 2.6 · Motion Control (Standard)",
       "provider": "Kling Video",
       "family": "Kling 2.6",
       "endpoint": "kling-video/motion-control/std",
@@ -4821,7 +6125,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/motion-control/std/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -4968,7 +6272,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/o3/first-last-frame/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -5069,7 +6373,7 @@
     },
     {
       "id": "kling-video-o3-image-reference",
-      "display_name": "Kling Omni · Image Reference",
+      "display_name": "Kling O3 · Image Reference",
       "provider": "Kling Video",
       "family": "Kling O3",
       "endpoint": "kling-video/o3/image-reference",
@@ -5191,7 +6495,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/o3/image-reference/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -5375,7 +6679,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/o3/video-edit/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -5515,7 +6819,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/o3/video-reference/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -5659,7 +6963,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/omni/first-last-frame/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -5783,7 +7087,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/omni/image-reference/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -5903,7 +7207,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/omni/video-edit/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -6043,7 +7347,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/omni/video-reference/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -6124,7 +7428,7 @@
     },
     {
       "id": "kling-video-v2-5-turbo-pro-image-to-video",
-      "display_name": "Kling 2.5 · Image to Video (Pro)",
+      "display_name": "Kling 2.5 Turbo Pro · Image to Video (Pro)",
       "provider": "Kling Video",
       "family": "Kling 2.5 Turbo Pro",
       "endpoint": "kling-video/v2.5-turbo/pro/image-to-video",
@@ -6181,7 +7485,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/v2.5-turbo/pro/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -6229,7 +7533,7 @@
     },
     {
       "id": "kling-video-v2-5-turbo-pro-text-to-video",
-      "display_name": "Kling 2.5 · Text to Video (Pro)",
+      "display_name": "Kling 2.5 Turbo Pro · Text to Video (Pro)",
       "provider": "Kling Video",
       "family": "Kling 2.5 Turbo Pro",
       "endpoint": "kling-video/v2.5-turbo/pro/text-to-video",
@@ -6275,7 +7579,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/v2.5-turbo/pro/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -6317,7 +7621,7 @@
     },
     {
       "id": "kling-video-v2-5-turbo-standard-image-to-video",
-      "display_name": "Kling 2.5 · Image to Video (Standard)",
+      "display_name": "Kling 2.5 Turbo Standard · Image to Video (Standard)",
       "provider": "Kling Video",
       "family": "Kling 2.5 Turbo Standard",
       "endpoint": "kling-video/v2.5-turbo/standard/image-to-video",
@@ -6374,7 +7678,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/v2.5-turbo/standard/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -6422,7 +7726,7 @@
     },
     {
       "id": "kling-video-v2-6-pro-image-to-video",
-      "display_name": "Kling 2.6 · Image to Video (Pro)",
+      "display_name": "Kling 2.6 Pro · Image to Video (Pro)",
       "provider": "Kling Video",
       "family": "Kling 2.6 Pro",
       "endpoint": "kling-video/v2.6/pro/image-to-video",
@@ -6494,7 +7798,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/v2.6/pro/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -6555,7 +7859,7 @@
     },
     {
       "id": "kling-video-v2-6-pro-text-to-video",
-      "display_name": "Kling 2.6 · Text to Video (Pro)",
+      "display_name": "Kling 2.6 Pro · Text to Video (Pro)",
       "provider": "Kling Video",
       "family": "Kling 2.6 Pro",
       "endpoint": "kling-video/v2.6/pro/text-to-video",
@@ -6617,7 +7921,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/v2.6/pro/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -6673,7 +7977,7 @@
     },
     {
       "id": "kling-3-turbo-image-to-video",
-      "display_name": "Kling 3.0 Turbo · Image to Video",
+      "display_name": "Kling 3.0 Turbo · Image to Video (Turbo)",
       "provider": "Kling",
       "family": "Kling 3.0 Turbo",
       "endpoint": "kling-video/v3.0-turbo/image-to-video",
@@ -6722,7 +8026,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/v3.0-turbo/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -6764,7 +8068,7 @@
     },
     {
       "id": "kling-3-turbo-text-to-video",
-      "display_name": "Kling 3.0 Turbo · Text to Video",
+      "display_name": "Kling 3.0 Turbo · Text to Video (Turbo)",
       "provider": "Kling",
       "family": "Kling 3.0 Turbo",
       "endpoint": "kling-video/v3.0-turbo/text-to-video",
@@ -6814,7 +8118,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/v3.0-turbo/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -6860,7 +8164,7 @@
     },
     {
       "id": "kling-3-4k-image-to-video",
-      "display_name": "Kling 3.0 4K · Image to Video",
+      "display_name": "Kling 3.0 4k · Image to Video (4K)",
       "provider": "Kling",
       "family": "Kling 3.0 4K",
       "endpoint": "kling-video/v3.0/4k/image-to-video",
@@ -6949,7 +8253,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/v3.0/4k/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -7032,7 +8336,7 @@
     },
     {
       "id": "kling-3-4k-text-to-video",
-      "display_name": "Kling 3.0 4K · Text to Video",
+      "display_name": "Kling 3.0 · Text to Video (4K)",
       "provider": "Kling",
       "family": "Kling 3.0 4K",
       "endpoint": "kling-video/v3.0/4k/text-to-video",
@@ -7113,7 +8417,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/v3.0/4k/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -7193,7 +8497,7 @@
     },
     {
       "id": "kling-3-pro-image-to-video",
-      "display_name": "Kling 3.0 Pro · Image to Video",
+      "display_name": "Kling 3.0 Pro · Image to Video (Pro)",
       "provider": "Kling",
       "family": "Kling 3.0 Pro",
       "endpoint": "kling-video/v3.0/pro/image-to-video",
@@ -7282,7 +8586,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/v3.0/pro/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -7365,7 +8669,7 @@
     },
     {
       "id": "kling-3-pro-text-to-video",
-      "display_name": "Kling 3.0 Pro · Text to Video",
+      "display_name": "Kling 3.0 Pro · Text to Video (Pro)",
       "provider": "Kling",
       "family": "Kling 3.0 Pro",
       "endpoint": "kling-video/v3.0/pro/text-to-video",
@@ -7446,7 +8750,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/v3.0/pro/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -7526,7 +8830,7 @@
     },
     {
       "id": "kling-3-standard-image-to-video",
-      "display_name": "Kling 3.0 Standard · Image to Video",
+      "display_name": "Kling 3.0 Standard · Image to Video (Standard)",
       "provider": "Kling",
       "family": "Kling 3.0 Standard",
       "endpoint": "kling-video/v3.0/std/image-to-video",
@@ -7615,7 +8919,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/v3.0/std/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -7698,7 +9002,7 @@
     },
     {
       "id": "kling-3-standard-text-to-video",
-      "display_name": "Kling 3.0 Standard · Text to Video",
+      "display_name": "Kling 3.0 Standard · Text to Video (Standard)",
       "provider": "Kling",
       "family": "Kling 3.0 Standard",
       "endpoint": "kling-video/v3.0/std/text-to-video",
@@ -7779,7 +9083,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/v3.0/std/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -7859,7 +9163,7 @@
     },
     {
       "id": "kling-video-v3-motion-control-pro",
-      "display_name": "Kling V3 Motion Control · Motion Control (Pro)",
+      "display_name": "Kling 3.0 · Motion Control (Pro)",
       "provider": "Kling Video",
       "family": "Kling 3.0",
       "endpoint": "kling-video/v3/motion-control/pro",
@@ -7921,7 +9225,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/v3/motion-control/pro/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -7972,7 +9276,7 @@
     },
     {
       "id": "kling-video-v3-motion-control-std",
-      "display_name": "Kling V3 Motion Control · Motion Control (Standard)",
+      "display_name": "Kling 3.0 · Motion Control (Standard)",
       "provider": "Kling Video",
       "family": "Kling 3.0",
       "endpoint": "kling-video/v3/motion-control/std",
@@ -8034,7 +9338,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/kling-video/v3/motion-control/std/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -8085,7 +9389,7 @@
     },
     {
       "id": "lightricks-ltx-2-5-image-to-video-fast",
-      "display_name": "LTX-2.5 Fast Image to Video",
+      "display_name": "LTX-2.5 Fast · Image to Video",
       "provider": "Lightricks",
       "family": "LTX-2.5 Fast",
       "endpoint": "lightricks/ltx-2.5/image-to-video/fast",
@@ -8197,7 +9501,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/lightricks/ltx-2.5/image-to-video/fast/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -8292,7 +9596,7 @@
     },
     {
       "id": "lightricks-ltx-2-5-image-to-video-pro",
-      "display_name": "LTX-2.5 Pro Image to Video",
+      "display_name": "LTX-2.5 Pro · Image to Video",
       "provider": "Lightricks",
       "family": "LTX-2.5 Pro",
       "endpoint": "lightricks/ltx-2.5/image-to-video/pro",
@@ -8401,7 +9705,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/lightricks/ltx-2.5/image-to-video/pro/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -8493,7 +9797,7 @@
     },
     {
       "id": "lightricks-ltx-2-5-text-to-video-fast",
-      "display_name": "LTX-2.5 Fast Text to Video",
+      "display_name": "LTX-2.5 Fast · Text to Video",
       "provider": "Lightricks",
       "family": "LTX-2.5 Fast",
       "endpoint": "lightricks/ltx-2.5/text-to-video/fast",
@@ -8585,7 +9889,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/lightricks/ltx-2.5/text-to-video/fast/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -8669,7 +9973,7 @@
     },
     {
       "id": "lightricks-ltx-2-5-text-to-video-pro",
-      "display_name": "LTX-2.5 Pro Text to Video",
+      "display_name": "LTX-2.5 Pro · Text to Video",
       "provider": "Lightricks",
       "family": "LTX-2.5 Pro",
       "endpoint": "lightricks/ltx-2.5/text-to-video/pro",
@@ -8758,7 +10062,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/lightricks/ltx-2.5/text-to-video/pro/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -8839,7 +10143,7 @@
     },
     {
       "id": "marketing-studio-image",
-      "display_name": "Marketing Studio Image",
+      "display_name": "Marketing Studio Image · 2.0 Alpha",
       "provider": "Higgsfield",
       "family": "Marketing Studio",
       "endpoint": "marketing-studio/image",
@@ -8938,7 +10242,7 @@
       "max_references": null,
       "result_field": "images",
       "docs_source": "https://open.higgsfield.ai/models/marketing-studio/image/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -9053,7 +10357,7 @@
     },
     {
       "id": "marketing-studio-image-flare",
-      "display_name": "GPT Image 2.5 Flare",
+      "display_name": "Marketing Studio Image · 2.5 Flare",
       "provider": "Marketing Studio",
       "family": "Marketing Studio Image",
       "endpoint": "marketing-studio/image/flare",
@@ -9154,7 +10458,7 @@
       "max_references": null,
       "result_field": "images",
       "docs_source": "https://open.higgsfield.ai/models/marketing-studio/image/flare/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -9269,7 +10573,7 @@
     },
     {
       "id": "marketing-studio-image-sunburst",
-      "display_name": "GPT Image 2.5 Sunburst",
+      "display_name": "Marketing Studio Image · 2.5 Sunburst",
       "provider": "Marketing Studio",
       "family": "Marketing Studio Image",
       "endpoint": "marketing-studio/image/sunburst",
@@ -9370,7 +10674,7 @@
       "max_references": null,
       "result_field": "images",
       "docs_source": "https://open.higgsfield.ai/models/marketing-studio/image/sunburst/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -9485,7 +10789,7 @@
     },
     {
       "id": "minimax-h3-image-to-video",
-      "display_name": "MiniMax H3 Image to Video",
+      "display_name": "MiniMax H3 · Image to Video",
       "provider": "Minimax",
       "family": "MiniMax H3",
       "endpoint": "minimax/h3/image-to-video",
@@ -9567,7 +10871,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/minimax/h3/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -9635,7 +10939,7 @@
     },
     {
       "id": "minimax-h3-reference-to-video",
-      "display_name": "MiniMax H3 Reference to Video",
+      "display_name": "MiniMax H3 · Reference to Video",
       "provider": "Minimax",
       "family": "MiniMax H3",
       "endpoint": "minimax/h3/reference-to-video",
@@ -9734,7 +11038,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/minimax/h3/reference-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -9831,7 +11135,7 @@
     },
     {
       "id": "minimax-h3-text-to-video",
-      "display_name": "MiniMax H3 Text to Video",
+      "display_name": "MiniMax H3 · Text to Video",
       "provider": "Minimax",
       "family": "MiniMax H3",
       "endpoint": "minimax/h3/text-to-video",
@@ -9893,7 +11197,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/minimax/h3/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -9950,7 +11254,7 @@
     },
     {
       "id": "minimax-hailuo-2-3-standard-image-to-video",
-      "display_name": "Minimax Hailuo 2.3 · Image to Video (Standard)",
+      "display_name": "MiniMax Hailuo 2.3 Standard · Image to Video (Standard)",
       "provider": "Minimax",
       "family": "MiniMax Hailuo 2.3 Standard",
       "endpoint": "minimax/hailuo-2.3/standard/image-to-video",
@@ -9997,7 +11301,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/minimax/hailuo-2.3/standard/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -10037,7 +11341,7 @@
     },
     {
       "id": "minimax-hailuo-2-3-standard-text-to-video",
-      "display_name": "Minimax Hailuo 2.3 · Text to Video (Standard)",
+      "display_name": "MiniMax Hailuo 2.3 Standard · Text to Video (Standard)",
       "provider": "Minimax",
       "family": "MiniMax Hailuo 2.3 Standard",
       "endpoint": "minimax/hailuo-2.3/standard/text-to-video",
@@ -10073,7 +11377,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/minimax/hailuo-2.3/standard/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -10107,7 +11411,7 @@
     },
     {
       "id": "pixverse-v6-image-to-video",
-      "display_name": "PixVerse V6 Image to Video",
+      "display_name": "PixVerse V6 · Image to Video",
       "provider": "Pixverse",
       "family": "PixVerse V6",
       "endpoint": "pixverse/v6/image-to-video",
@@ -10192,7 +11496,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/pixverse/v6/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -10261,7 +11565,7 @@
     },
     {
       "id": "pixverse-v6-text-to-video",
-      "display_name": "PixVerse V6 Text to Video",
+      "display_name": "PixVerse V6 · Text to Video",
       "provider": "Pixverse",
       "family": "PixVerse V6",
       "endpoint": "pixverse/v6/text-to-video",
@@ -10340,7 +11644,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/pixverse/v6/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -10410,7 +11714,7 @@
     },
     {
       "id": "recraft-v4-1-pro",
-      "display_name": "Recraft V4.1 Pro",
+      "display_name": "Recraft V4.1 Pro · Pro Text to Image",
       "provider": "Recraft",
       "family": "Recraft V4.1",
       "endpoint": "recraft/v4.1/pro/text-to-image",
@@ -10487,7 +11791,7 @@
       "max_references": null,
       "result_field": "images",
       "docs_source": "https://open.higgsfield.ai/models/recraft/v4.1/pro/text-to-image/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -10667,7 +11971,7 @@
       "max_references": null,
       "result_field": "images",
       "docs_source": "https://open.higgsfield.ai/models/recraft/v4.1/text-to-image/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -10847,7 +12151,7 @@
       "max_references": null,
       "result_field": "images",
       "docs_source": "https://open.higgsfield.ai/models/recraft/v4.1/utility/pro/text-to-image/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -11027,7 +12331,7 @@
       "max_references": null,
       "result_field": "images",
       "docs_source": "https://open.higgsfield.ai/models/recraft/v4.1/utility/text-to-image/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -11222,7 +12526,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/wan/v2.6/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -11357,7 +12661,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/wan/v2.6/reference-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -11491,7 +12795,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/wan/v2.6/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -11547,7 +12851,7 @@
     },
     {
       "id": "wan-v2-7-image-to-video",
-      "display_name": "Wan 2.6 · Image to Video",
+      "display_name": "Wan 2.7 · Image to Video",
       "provider": "Wan",
       "family": "Wan 2.7",
       "endpoint": "wan/v2.7/image-to-video",
@@ -11637,7 +12941,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/wan/v2.7/image-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -11701,7 +13005,7 @@
     },
     {
       "id": "wan-v2-7-reference-to-video",
-      "display_name": "Wan 2.7 References · Reference to Video",
+      "display_name": "Wan 2.7 · Reference to Video",
       "provider": "Wan",
       "family": "Wan 2.7",
       "endpoint": "wan/v2.7/reference-to-video",
@@ -11793,7 +13097,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/wan/v2.7/reference-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -11889,7 +13193,7 @@
     },
     {
       "id": "wan-v2-7-text-to-video",
-      "display_name": "Wan 2.6 · Text to Video",
+      "display_name": "Wan 2.7 · Text to Video",
       "provider": "Wan",
       "family": "Wan 2.7",
       "endpoint": "wan/v2.7/text-to-video",
@@ -11974,7 +13278,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/wan/v2.7/text-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -12040,7 +13344,7 @@
     },
     {
       "id": "grok-image-2",
-      "display_name": "Grok Image 2.0",
+      "display_name": "Grok Imagine 2.0",
       "provider": "xAI",
       "family": "Grok Imagine",
       "endpoint": "xai/grok-imagine-image-2.0",
@@ -12112,7 +13416,7 @@
       "max_references": null,
       "result_field": "images",
       "docs_source": "https://open.higgsfield.ai/models/xai/grok-imagine-image-2.0/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -12177,7 +13481,7 @@
     },
     {
       "id": "xai-grok-imagine-video-v1-5-reference-to-video",
-      "display_name": "Grok Imagine Video 1.5 Reference",
+      "display_name": "Grok Imagine Video 1.5",
       "provider": "Xai",
       "family": "xai/grok-imagine-video/v1.5/reference-to-video",
       "endpoint": "xai/grok-imagine-video/v1.5/reference-to-video",
@@ -12265,7 +13569,7 @@
       "max_references": null,
       "result_field": "video",
       "docs_source": "https://open.higgsfield.ai/models/xai/grok-imagine-video/v1.5/reference-to-video/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -12402,7 +13706,7 @@
       "max_references": null,
       "result_field": "images",
       "docs_source": "https://open.higgsfield.ai/models/z-image/turbo/api-reference",
-      "docs_checked": "2026-09-27",
+      "docs_checked": "2026-10-21",
       "status": "active",
       "notes": [],
       "input_schema": {
@@ -12458,78 +13762,6 @@
         },
         "additionalProperties": false
       }
-    },
-    {
-      "id": "soul-cinema",
-      "display_name": "SOUL Cinema",
-      "provider": "Higgsfield",
-      "family": "SOUL",
-      "endpoint": "higgsfield-ai/soul/cinema",
-      "capability": "image_generate",
-      "output": "image",
-      "parameters": [
-        {
-          "name": "prompt",
-          "type": "string",
-          "required": true,
-          "description": "Text description of the cinematic image to generate."
-        },
-        {
-          "name": "aspect_ratio",
-          "type": "string",
-          "default": "4:3",
-          "description": "Supported values: `9:16`, `16:9`, `4:3`, `3:4`, `1:1`, `2:3`, `3:2`.",
-          "choices": [
-            "9:16",
-            "16:9",
-            "4:3",
-            "3:4",
-            "1:1",
-            "2:3",
-            "3:2"
-          ]
-        },
-        {
-          "name": "resolution",
-          "type": "string",
-          "default": "720p",
-          "description": "Supported values: `720p`, `1080p`.",
-          "choices": [
-            "720p",
-            "1080p"
-          ]
-        },
-        {
-          "name": "batch_size",
-          "type": "integer",
-          "default": 1,
-          "description": "Number of images to generate. Supported values: `1`, `4`.",
-          "choices": [
-            1,
-            4
-          ]
-        },
-        {
-          "name": "enhance_prompt",
-          "type": "boolean",
-          "default": true,
-          "description": "Enhance the supplied prompt for SOUL Cinema before generation."
-        },
-        {
-          "name": "seed",
-          "type": "integer",
-          "description": "Seed from `1` to `1000000`. Omit it to generate a random seed.",
-          "minimum": 1,
-          "maximum": 1000000
-        }
-      ],
-      "result_field": "images",
-      "docs_source": "https://docs.higgsfield.ai/docs/models/soul-cinema/generate.md",
-      "docs_checked": "2026-09-21",
-      "status": "active",
-      "input_media": [],
-      "max_references": null,
-      "notes": []
     }
   ]
 }

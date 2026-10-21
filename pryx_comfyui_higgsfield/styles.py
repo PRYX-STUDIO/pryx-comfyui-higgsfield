@@ -17,6 +17,7 @@ from .errors import CatalogError
 STYLE_ENDPOINTS = {
     "soul": "/v1/text2image/soul-styles",
     "soul-2": "/v1/text2image/soul-styles/v2",
+    "genjutsu-restyle": "/models/higgsfield/genjutsu/restyle/v1.0/presets",
 }
 STYLE_CACHE_TTL = 24 * 60 * 60
 

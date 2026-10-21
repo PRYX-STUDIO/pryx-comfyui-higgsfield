@@ -1,8 +1,8 @@
-name: Catalog drift check
+name: Catalog auto-update
 
 on:
   schedule:
-    - cron: "0 6 * * 1"
+    - cron: "0 6 * * *"
   workflow_dispatch:
 
 jobs:
@@ -17,14 +17,22 @@ jobs:
         with:
           python-version: "3.12"
       - name: Install dependencies
-        run: python -m pip install -r requirements.txt
+        run: python -m pip install -r requirements.txt pytest
       - name: Generate catalog
         run: python tools/sync_platform_catalog.py --catalog pryx_comfyui_higgsfield/catalog/models.json --summary
+      - name: Validate every model and request contract
+        run: python -m pytest -q
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate frontend controls
+        run: node --test tests/dynamic_widgets.test.cjs tests/reference_preview.test.cjs tests/settings_credentials.test.cjs
       - name: Open catalog update pull request
         uses: peter-evans/create-pull-request@v7
         with:
+          add-paths: pryx_comfyui_higgsfield/catalog/models.json
           branch: automation/catalog-drift
           delete-branch: true
           title: "chore: update Higgsfield catalog"
           commit-message: "chore: update Higgsfield catalog"
-          body: "Generated from the public Higgsfield platform API references. Review endpoint, schema, and limit changes before merging."
+          body: "Generated from the public Higgsfield JSON catalog and schemas, without credentials. Python and frontend contract tests passed. Review endpoint, schema, and limit changes before merging; unsupported or disappearing models fail closed."

@@ -26,7 +26,7 @@ CLASSES = [generation.ImageGenerateEditNode, generation.TextToVideoNode,
 
 
 def sample_arguments(model):
-    result = {"prompt": "Contract test"}
+    result = {"brief" if "brief" in model.parameter_map else "prompt": "Contract test"}
     def sample(schema):
         if "default" in schema:
             return schema["default"]
@@ -78,7 +78,7 @@ def test_every_model_node_schema_and_http_payload(model, monkeypatch):
     assert model.id in inputs["required"]["model"][1]["choices"]
     assert cls.VALIDATE_INPUTS(model.id) is True
     for p in model.parameters:
-        if p.media_types or p.name == "prompt":
+        if p.media_types or p.read_only or p.name in {"prompt", "brief"}:
             continue
         widget = inputs["optional"][generation._widget_name(p)]
         if p.choices:
@@ -110,7 +110,7 @@ def test_every_model_node_schema_and_http_payload(model, monkeypatch):
     monkeypatch.setattr(generation, "_image_result", lambda outcome: ())
     monkeypatch.setattr(generation, "_video_result", lambda outcome: ())
     values = {p.name: (json.dumps(expected[p.name]) if p.type in {"array", "object"} else expected[p.name])
-              for p in model.parameters if p.name in expected and not p.media_types and p.name != "prompt"}
+              for p in model.parameters if p.name in expected and not p.media_types and p.name not in {"prompt", "brief"}}
     refs = ReferenceCollection()
     for spec in model.parameters:
         if spec.name not in expected or not spec.media_types:

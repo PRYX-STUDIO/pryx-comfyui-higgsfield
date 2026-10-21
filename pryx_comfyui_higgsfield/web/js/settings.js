@@ -23,7 +23,7 @@ const GENERATOR_CAPABILITIES = {
     PRYXComfyUIHiggsfieldVideoExtend: new Set(["video_extend"]),
 };
 GENERATOR_CAPABILITIES.PRYXComfyUIHiggsfieldAdvancedRequest = new Set(Object.values(GENERATOR_CAPABILITIES).flatMap((set) => [...set]));
-const NODE_UI_SCHEMA_VERSION = 6;
+const NODE_UI_SCHEMA_VERSION = 7;
 
 const ALWAYS_VISIBLE_WIDGETS = new Set(["model", "request_mode", "max_usd", "auto_save", "timeout", "model_info", "arguments_json"]);
 const MEDIA_PARAMETER_NAMES = new Set([
@@ -33,6 +33,7 @@ const MEDIA_PARAMETER_NAMES = new Set([
     "first_frame_url",
     "last_frame_url",
     "image_urls",
+    "item_image_urls",
     "video_url",
     "video_urls",
     "audio_url",
@@ -40,7 +41,7 @@ const MEDIA_PARAMETER_NAMES = new Set([
     "file_url",
     "link_url",
 ]);
-const MEDIA_INPUT_NAMES = new Set(["references", "image", "end_image", "video", "audio"]);
+const MEDIA_INPUT_NAMES = new Set(["references", "image", "end_image", "item_images", "video", "audio"]);
 let catalogPromise;
 let credentialStatusRevision = 0;
 
@@ -323,6 +324,17 @@ const PARAMETER_HINTS = {
     resolution: "Provider resolution tier, not a width × height input.",
     seed: "Optional deterministic seed; -1 omits it.",
     sound: "Provider soundtrack setting.",
+    custom_reference_id: "Completed SOUL ID character UUID, owned by this API account and trained for the matching model family.",
+    custom_reference_strength: "SOUL ID influence from zero (weakest) to one (strongest).",
+    tier: "AI Influencer human or animal character type. Appearance choices depend on this selection.",
+    selection: "Use the appearance picker or JSON mapping category keys to arrays of current option keys. Counts, exclusive choices and facial slots are checked before upload.",
+    body_color: "Optional animal body color as #RRGGBB. Not available for human tiers.",
+    pinned_species: "Advanced insect species ID, only for insects. Species IDs are not listed by the public options API; normally leave blank.",
+    trait_variants: "Advanced appearance-v2 JSON overrides with version and choices. Normally leave blank; identifiers must be valid for this account/model.",
+    variation_index: "Animal variation position with a fixed seed. Human tiers require zero.",
+    niche: "Optional product or advertising category.",
+    language: "Optional language for advertising copy.",
+    target_audience: "Optional audience description for advertising images.",
 };
 
 function parameterTooltip(parameter) {
@@ -340,6 +352,7 @@ function parameterTooltip(parameter) {
         pieces.push(`Characters: ${parameter.min_length ?? 0}–${parameter.max_length ?? "∞"}`);
     }
     if (parameter.multiple_of != null) pieces.push(`Step: ${parameter.multiple_of}`);
+    if (parameter.read_only) pieces.push("Computed by the provider; not an editable request input.");
     return pieces.join(" ");
 }
 
@@ -428,7 +441,14 @@ function parameterWidgetDefinition(parameter, currentValue, baseOptions = {}) {
 }
 
 function setWidgetFromParameter(node, widget, parameter) {
-    const currentValue = widget.value;
+    let currentValue = widget.value;
+    if (["style_id", "preset_id"].includes(parameter.name) && currentValue) {
+        const labelled = parameter.choices?.find((choice) => choice.endsWith(` [${currentValue}]`));
+        if (labelled) {
+            currentValue = labelled;
+            setWidgetValue(node, widget, labelled);
+        }
+    }
     const definition = parameterWidgetDefinition(parameter, currentValue, widget.options);
     const needsMultilineRebuild = definition.expectedWidgetType === "text" &&
         Boolean(widget.options?.multiline) !== Boolean(definition.options.multiline);
@@ -490,7 +510,7 @@ function parameterDefault(parameter) {
 function ensureCatalogParameterWidgets(node, parameters) {
     let added = false;
     for (const [name, parameter] of parameters) {
-        if (name === "prompt" || name === "model_id" || ALWAYS_VISIBLE_WIDGETS.has(name) || MEDIA_PARAMETER_NAMES.has(name)) continue;
+        if (parameter.read_only || ["prompt", "brief", "model_id"].includes(name) || ALWAYS_VISIBLE_WIDGETS.has(name) || MEDIA_PARAMETER_NAMES.has(name)) continue;
         if (node.widgets?.some((widget) => widget.name === name) || node.inputs?.some((input) => input.name === name)) continue;
 
         const definition = parameterWidgetDefinition(parameter, parameterDefault(parameter));
@@ -554,6 +574,7 @@ function updateMediaInputs(node, model) {
         if (!MEDIA_INPUT_NAMES.has(input.name)) continue;
         const visible = input.name === "references" ? supported.size > 0 : input.name === "end_image"
             ? model?.parameters?.some((p) => ["end_image_url", "last_image_url", "last_frame_url"].includes(p.name))
+            : input.name === "item_images" ? model?.parameters?.some((p) => p.name === "item_image_urls")
             : supported.has(input.name);
         input.hidden = !visible;
         input.tooltip = visible
@@ -581,7 +602,7 @@ function updateMediaInputs(node, model) {
 const MEDIA_LABELS = {
     image_url: "Start/source image", first_frame_url: "Start frame",
     end_image_url: "End image", last_image_url: "End image", last_frame_url: "End frame",
-    image_urls: "Reference images", video_url: "Source video", video_urls: "Reference videos",
+    image_urls: "Reference images", item_image_urls: "Clothing/object reference images", video_url: "Source video", video_urls: "Reference videos",
     audio_url: "Audio track", audio_urls: "Reference audio tracks",
     file_url: "Document link", link_url: "Web page link",
 };
@@ -725,7 +746,7 @@ function updateModelInfo(node, model) {
     lines.push("", "OUTPUT");
     for (const name of ["resolution", "aspect_ratio", "duration", "output_format", "batch_size"]) {
         const p = model.parameters.find((p) => p.name === name);
-        if (!p) continue;
+        if (!p || p.read_only) continue;
         lines.push(`${name}: ${p.choices?.join(" / ") || `${p.minimum ?? "?"}–${p.maximum ?? "?"}`}${p.default != null ? ` · default ${p.default}` : ""}`);
     }
     if (model.parameters.some((p) => p.name === "resolution")) {
@@ -810,7 +831,7 @@ function attachCatalogCallbacks(node) {
     if (node.__pryxCatalogCallbacksAttached) return;
     node.__pryxCatalogCallbacksAttached = true;
     for (const widget of node.widgets || []) {
-        if (!["model", "model_id", "provider", "capability", "status"].includes(widget.name)) continue;
+        if (!["model", "model_id", "provider", "capability", "status", "tier"].includes(widget.name)) continue;
         const original = widget.callback;
         widget.callback = function (...args) {
             const result = original?.apply(this, args);
@@ -847,7 +868,11 @@ async function updateCatalogWidgets(node) {
         modelWidget.options.values = compatible.map((item) => item.id);
         modelWidget.type = "combo";
         if (!compatible.some((item) => item.id === modelWidget.value)) modelWidget.value = compatible[0].id;
-        const model = modelForNode(node, compatible);
+        let model = modelForNode(node, compatible);
+        if (model) {
+            model = await modelWithCurrentChoices(model);
+            if (modelForNode(node, compatible)?.id !== model.id) return;
+        }
         updateModelInfo(node, model);
         if (!model) return;
         modelWidget.options.tooltip = modelTooltip(model);
@@ -871,13 +896,15 @@ async function updateCatalogWidgets(node) {
                 continue;
             }
             if (ALWAYS_VISIBLE_WIDGETS.has(widget.name)) continue;
+            if (widget.name === "appearance_options") continue;
             if (widget.name === "model_id") continue;
             const parameter = parameters.get(widget.name);
             if (MEDIA_PARAMETER_NAMES.has(widget.name)) {
                 setWidgetVisibility(widget, false);
             } else {
-                setWidgetVisibility(widget, Boolean(parameter));
-                if (parameter) {
+                const editable = parameter && !parameter.read_only && widget.name !== "brief";
+                setWidgetVisibility(widget, Boolean(editable));
+                if (editable) {
                     if (modelChanged) {
                         setWidgetValue(node, widget, parameterDefault(parameter));
                     }
@@ -886,6 +913,7 @@ async function updateCatalogWidgets(node) {
             }
         }
         updateMediaInputs(node, model);
+        updateInfluencerControls(node, model);
         node.properties = node.properties || {};
         node.properties.pryx_comfyui_higgsfield_model_info = model ? {
             id: model.id,
@@ -916,16 +944,138 @@ async function updateCatalogWidgets(node) {
 }
 
 async function updateSoulStyleWidget(node) {
-    const widget = node.widgets?.find((item) => item.name === "style_id");
-    if (!widget) return;
+    // Choices are loaded inside updateCatalogWidgets so model switches and
+    // initial creation use the same native widget replacement path.
+}
+
+const modelChoicesCache = new Map();
+let appearanceOptionsPromise;
+
+async function modelWithCurrentChoices(model) {
+    const endpoint = model.endpoint;
+    const variant = endpoint.includes("/genjutsu/restyle/") ? "genjutsu-restyle"
+        : endpoint.startsWith("higgsfield-ai/soul/v2/") ? "soul-2"
+            : endpoint === "higgsfield-ai/soul/standard" ? "soul" : null;
+    if (!variant) return model;
+    const field = variant === "genjutsu-restyle" ? "preset_id" : "style_id";
+    if (!model.parameters.some((p) => p.name === field)) return model;
     try {
-        const id = node.widgets?.find((item) => item.name === "model")?.value;
-        if (!["soul-2", "soul-standard"].includes(id)) return;
-        const result = await requestJson("/pryx-comfyui-higgsfield/styles?variant=" + (id === "soul-2" ? "soul-2" : "soul"));
-        widget.options.values = (result.styles || []).map((item) => item.style_id);
+        if (!modelChoicesCache.has(variant)) {
+            modelChoicesCache.set(variant, requestJson("/pryx-comfyui-higgsfield/styles?variant=" + variant)
+                .catch((error) => { modelChoicesCache.delete(variant); throw error; }));
+        }
+        const result = await modelChoicesCache.get(variant);
+        const choices = (result.styles || []).map((item) => `${item.name} [${item.style_id}]`);
+        if (!choices.length) return model;
+        if (variant !== "genjutsu-restyle") choices.unshift("");
+        return { ...model, parameters: model.parameters.map((p) => p.name === field ? {
+            ...p, choices, description: `${field === "preset_id" ? "Required current visual preset" : "Optional SOUL style"}. Names are shown here; only the UUID is sent to Higgsfield.`,
+        } : p) };
     } catch (error) {
-        console.debug("[PRYX ComfyUI Higgsfield] style widget update skipped", error);
+        console.debug("[PRYX ComfyUI Higgsfield] model choices unavailable", error);
+        return model; // Keep an explicit ID input; never invent a replacement preset.
     }
+}
+
+function applicableAppearanceCategories(options, tier) {
+    return (options.categories || []).filter((category) => category.tiers?.includes(tier)).map((category) => ({
+        ...category, options: category.options.filter((option) => !option.tiers || option.tiers.includes(tier)),
+    }));
+}
+
+function updateInfluencerControls(node, model) {
+    let picker = node.widgets?.find((item) => item.name === "appearance_options");
+    const active = model.endpoint === "higgsfield/ai-influencer";
+    if (picker) setWidgetVisibility(picker, active);
+    if (!active) return;
+    const tierWidget = node.widgets?.find((item) => item.name === "tier");
+    const tier = tierWidget?.value || "normal";
+    const human = ["normal", "freak", "total"].includes(tier);
+    for (const name of ["body_color", "pinned_species", "variation_index"]) {
+        const widget = node.widgets?.find((item) => item.name === name);
+        if (!widget) continue;
+        const visible = !human && (name !== "pinned_species" || tier === "insects");
+        setWidgetVisibility(widget, visible);
+        if (!visible) setWidgetValue(node, widget, name === "variation_index" ? 0 : "");
+    }
+    const prompt = node.inputs?.find((item) => item.name === "prompt");
+    if (prompt) prompt.tooltip = "AI Influencer character direction, sent as brief. Maximum 4000 characters.";
+    const selection = node.widgets?.find((item) => item.name === "selection");
+    if (!selection) return;
+    if (!picker) {
+        const root = document.createElement("details");
+        root.style.cssText = "padding:10px;overflow:auto;background:var(--comfy-input-bg,#202020);color:var(--fg-color,#ddd);border-radius:8px;font:12px sans-serif;";
+        const summary = document.createElement("summary");
+        summary.textContent = "Appearance options (current API catalog)";
+        summary.style.cursor = "pointer";
+        const body = document.createElement("div");
+        root.append(summary, body);
+        picker = node.addDOMWidget("appearance_options", "pryx_appearance", root, { serialize: false, hideOnZoom: false, getValue: () => "", setValue: () => {} });
+        picker.computeSize = () => [320, picker.hidden ? 0 : root.open ? 320 : 48];
+        picker.options.getMinHeight = () => picker.hidden ? 0 : root.open ? 320 : 48;
+        picker.options.getMaxHeight = () => picker.hidden ? 0 : root.open ? 400 : 48;
+        picker.__body = body;
+        root.addEventListener("toggle", () => fitNodeToContent(node));
+    }
+    appearanceOptionsPromise ||= requestJson("/pryx-comfyui-higgsfield/appearance-options").catch((error) => {
+        appearanceOptionsPromise = null;
+        throw error;
+    });
+    const currentPicker = picker;
+    appearanceOptionsPromise.then((options) => {
+        if (node.widgets?.find((w) => w.name === "model")?.value !== model.id || tierWidget?.value !== tier) return;
+        const categories = applicableAppearanceCategories(options, tier);
+        let value;
+        try { value = JSON.parse(selection.value || "{}"); } catch { return; }
+        if (!value || typeof value !== "object" || Array.isArray(value)) return;
+        currentPicker.__body.replaceChildren();
+        // Switching tiers deliberately clears incompatible keys; the backend
+        // validates the same live catalog again before uploading anything.
+        const compatible = {};
+        for (const category of categories) {
+            const allowed = new Set(category.options.map((o) => o.key));
+            const selected = (Array.isArray(value[category.key]) ? value[category.key] : []).filter((key) => allowed.has(key));
+            if (selected.length) compatible[category.key] = selected;
+        }
+        setWidgetValue(node, selection, JSON.stringify(compatible));
+        for (const category of categories) {
+            const label = document.createElement("label");
+            label.style.cssText = "display:block;margin-top:10px;";
+            label.textContent = `${category.label} (maximum ${category.max})`;
+            const select = document.createElement("select");
+            select.multiple = category.max > 1;
+            select.size = select.multiple ? Math.min(4, category.options.length) : 1;
+            select.style.cssText = "display:block;width:100%;margin-top:4px;color:inherit;background:var(--comfy-input-bg,#202020);";
+            const empty = document.createElement("option");
+            empty.value = ""; empty.textContent = "Automatic / omit";
+            select.append(empty);
+            for (const option of category.options) {
+                const item = document.createElement("option");
+                item.value = option.key;
+                item.textContent = option.label + (option.exclusive ? " (exclusive)" : "");
+                item.selected = compatible[category.key]?.includes(option.key) || false;
+                select.append(item);
+            }
+            select.addEventListener("change", () => {
+                const values = [...select.selectedOptions].map((o) => o.value).filter(Boolean);
+                const chosen = category.options.filter((o) => values.includes(o.key));
+                const slots = chosen.map((o) => o.slot).filter((slot) => slot != null);
+                if (values.length > category.max || chosen.length > 1 && chosen.some((o) => o.exclusive) || new Set(slots).size !== slots.length) {
+                    for (const option of select.options) option.selected = compatible[category.key]?.includes(option.value) || false;
+                    notify("Choose no more than the category limit; exclusive choices must be selected alone, with one option per facial slot.");
+                    return;
+                }
+                if (values.length) compatible[category.key] = values; else delete compatible[category.key];
+                setWidgetValue(node, selection, JSON.stringify(compatible));
+                node.setDirtyCanvas?.(true, true);
+            });
+            label.append(select);
+            currentPicker.__body.append(label);
+        }
+        currentPicker.element.title = "Multi-select: Ctrl/Cmd-click to add/remove choices. Omitted categories use provider defaults. Catalog revision: " + options.config_revision;
+    }).catch((error) => {
+        currentPicker.__body.textContent = "Appearance catalog unavailable. The selection JSON input remains available: " + error.message;
+    });
 }
 
 const COLLECTOR_SLOT_LIMITS = { image: 30, video: 10, audio: 10 };

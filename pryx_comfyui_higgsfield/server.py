@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 from functools import lru_cache
+import asyncio
+from threading import Thread
 from typing import Any
 
 from .catalog import CatalogManager, runtime_catalog
@@ -106,6 +108,7 @@ def register_routes() -> None:
                     "source": catalog.source,
                     "last_sync_status": catalog_manager().last_sync_status,
                     "models": catalog.as_payload()["models"],
+                    "available_catalog_version": catalog_manager().metadata()["catalog_version"],
                 }
             )
         except HiggsfieldError as error:
@@ -113,7 +116,7 @@ def register_routes() -> None:
 
     async def refresh_catalog(request):
         try:
-            catalog = catalog_manager().refresh()
+            catalog = await asyncio.to_thread(catalog_manager().refresh_available)
             return web.json_response(
                 {
                     "catalog_version": catalog.catalog_version,
@@ -134,10 +137,23 @@ def register_routes() -> None:
 
             client = HiggsfieldClient(credentials, timeout=60)
             try:
-                styles = style_manager().load(client, variant, refresh=refresh)
+                styles = await asyncio.to_thread(style_manager().load, client, variant, refresh=refresh)
             finally:
                 client.close()
             return web.json_response({"variant": variant, "styles": styles})
+        except HiggsfieldError as error:
+            return web.json_response({"error": redact_secrets(str(error))}, status=400)
+
+    async def get_appearance_options(request):
+        try:
+            from .client import HiggsfieldClient
+            from .model_options import INFLUENCER_OPTIONS
+            client = HiggsfieldClient(resolve_credentials(credential_store()), timeout=30)
+            try:
+                payload = await asyncio.to_thread(client.get_json, INFLUENCER_OPTIONS)
+            finally:
+                client.close()
+            return web.json_response(dict(payload))
         except HiggsfieldError as error:
             return web.json_response({"error": redact_secrets(str(error))}, status=400)
 
@@ -148,7 +164,11 @@ def register_routes() -> None:
     routes.get("/pryx-comfyui-higgsfield/catalog")(get_catalog)
     routes.post("/pryx-comfyui-higgsfield/catalog/refresh")(refresh_catalog)
     routes.get("/pryx-comfyui-higgsfield/styles")(get_styles)
+    routes.get("/pryx-comfyui-higgsfield/appearance-options")(get_appearance_options)
     _registered = True
+    # Download updates without blocking ComfyUI startup or changing schemas
+    # under an already running workflow. The next restart activates the cache.
+    Thread(target=catalog_manager().load, name="higgsfield-catalog-refresh", daemon=True).start()
 
 
 def _credentials_from_request(data: Any) -> Credentials:
