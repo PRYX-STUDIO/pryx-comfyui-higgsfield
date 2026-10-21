@@ -118,3 +118,37 @@ test('saving a combined key stores both parts, clears and closes the dialog, and
     assert.equal(overlay.removed, true);
     assert.equal(statusElement.textContent, 'Configured (te…id)');
 });
+
+test('model updates show restart status and notify only once per pending version', () => {
+    const status = { textContent: '' };
+    const notifications = [];
+    const context = loadCredentialSettings({
+        document: { querySelectorAll: () => [status] },
+        app: { ui: { dialog: { show: (message) => notifications.push(message) } } },
+        console,
+    });
+    const update = { message: 'Current models loaded from the API.', restart_required: true, catalog_version: '2030-01-01.1' };
+    context.handleCatalogStatus({ detail: update });
+    context.handleCatalogStatus({ detail: update });
+    assert.equal(notifications.length, 1);
+    assert.match(status.textContent, /Restart ComfyUI/);
+    context.handleCatalogStatus({ detail: { ...update, catalog_version: '2030-01-01.2' } });
+    assert.equal(notifications.length, 2);
+    context.handleCatalogStatus({ detail: { message: 'API discovery failed. Keeping the last working models.', restart_required: false } });
+    assert.match(status.textContent, /Keeping the last working models/);
+    assert.equal(notifications.length, 2);
+});
+
+test('a manual model check with no changed schema does not ask for a restart', async () => {
+    const status = { textContent: '' };
+    const notifications = [];
+    const context = loadCredentialSettings({
+        document: { querySelectorAll: () => [status] },
+        app: { ui: { dialog: { show: (message) => notifications.push(message) } } },
+        fetch: async () => ({ ok: true, json: async () => ({ message: 'Models are current.', restart_required: false }) }),
+    });
+    vm.runInContext(source.slice(source.indexOf('async function refreshCatalog()'), source.indexOf('\nfunction handleProgress')), context);
+    await context.refreshCatalog();
+    assert.equal(status.textContent, 'Models are current.');
+    assert.match(notifications[0], /No restart is needed/);
+});

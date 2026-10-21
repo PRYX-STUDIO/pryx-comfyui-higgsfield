@@ -193,7 +193,7 @@ def public_model_inventory() -> set[str]:
 
 def authenticated_snapshot(client) -> dict[str, dict]:
     """The generation API can now return model modes AND their input schemas."""
-    payload = client.get_json("/models?include_schema=true")
+    payload = client.get_json("/models?include_schema=true", attempts=1)
     items = payload.get("items")
     if not isinstance(items, list) or type(payload.get("total")) is not int or len(items) != payload["total"]:
         raise ValueError("Incomplete authenticated model inventory")
@@ -271,6 +271,10 @@ def _capability(slug: str, operation: str | list[str]) -> str:
         return "reference_to_video"
     if slug.endswith("/video-edit") or "video2video" in operations:
         return "video_edit"
+    if "text2video" in operations:
+        return "text_to_video"
+    if "image2video" in operations:
+        return "image_to_video"
     if operations.intersection({"text2image", "image_edit"}) or slug.startswith(("recraft/", "ideogram/", "z-image/", "marketing-studio/", "higgsfield-ai/", "alibaba/qwen-image-", "xai/grok-imagine-image-")):
         return "image_edit" if "image_edit" in operations or any(name in slug for name in ("/edit", "/image-to-image", "marketing-studio/", "grok-imagine-image")) else "image_generate"
     raise ValueError(f"No safe node capability mapping for {slug}: {operation}")
@@ -299,7 +303,7 @@ def _parameter(name: str, item: dict, required: set[str]) -> dict:
     return parameter
 
 
-def build_catalog(snapshot: dict[str, dict], bundled: dict) -> dict:
+def build_catalog(snapshot: dict[str, dict], bundled: dict, *, allow_missing: bool = False) -> dict:
     existing = {model["endpoint"]: model for model in bundled["models"]}
     models = []
     for slug, item in snapshot.items():
@@ -343,8 +347,12 @@ def build_catalog(snapshot: dict[str, dict], bundled: dict) -> dict:
             "input_schema": schema,
         })
     unknown_missing = set(existing) - LEGACY_DOCUMENTED_ENDPOINTS
-    if unknown_missing:
+    if unknown_missing and not allow_missing:
         raise ValueError(f"Previously cataloged endpoints missing from platform inventory: {sorted(unknown_missing)}")
+    for slug in unknown_missing:
+        # A complete API inventory can legitimately retire a model. Retain
+        # the ID for diagnostics, but do not offer it for new selections.
+        existing[slug] = {**existing[slug], "status": "unavailable"}
     # This endpoint remains documented separately, outside public discovery.
     models.extend(existing.values())
     def contract(model):

@@ -1,16 +1,14 @@
-name: Catalog auto-update
+name: Catalog audit (manual)
 
 on:
-  schedule:
-    - cron: "0 6 * * *"
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   catalog:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -19,7 +17,7 @@ jobs:
       - name: Install dependencies
         run: python -m pip install -r requirements.txt pytest
       - name: Generate catalog
-        run: python tools/sync_platform_catalog.py --catalog pryx_comfyui_higgsfield/catalog/models.json --summary
+        run: python tools/sync_platform_catalog.py --catalog pryx_comfyui_higgsfield/catalog/models.json --snapshot _TMP/public-models.json --summary
       - name: Validate every model and request contract
         run: python -m pytest -q
       - uses: actions/setup-node@v4
@@ -27,12 +25,10 @@ jobs:
           node-version: "22"
       - name: Validate frontend controls
         run: node --test tests/dynamic_widgets.test.cjs tests/reference_preview.test.cjs tests/settings_credentials.test.cjs
-      - name: Open catalog update pull request
-        uses: peter-evans/create-pull-request@v7
+      - name: Save reviewed-release candidate and public snapshot
+        uses: actions/upload-artifact@v4
         with:
-          add-paths: pryx_comfyui_higgsfield/catalog/models.json
-          branch: automation/catalog-drift
-          delete-branch: true
-          title: "chore: update Higgsfield catalog"
-          commit-message: "chore: update Higgsfield catalog"
-          body: "Generated from the public Higgsfield JSON catalog and schemas, without credentials. Python and frontend contract tests passed. Review endpoint, schema, and limit changes before merging; unsupported or disappearing models fail closed."
+          name: higgsfield-model-audit
+          path: |
+            pryx_comfyui_higgsfield/catalog/models.json
+            _TMP/public-models.json

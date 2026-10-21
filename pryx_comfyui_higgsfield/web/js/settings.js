@@ -13,6 +13,7 @@ const VALIDATE_ROUTE = "/pryx-comfyui-higgsfield/settings/validate";
 const CATALOG_ROUTE = "/pryx-comfyui-higgsfield/catalog";
 const REFRESH_ROUTE = "/pryx-comfyui-higgsfield/catalog/refresh";
 const CREDENTIAL_STATUS_SELECTOR = "[data-pryx-comfyui-higgsfield-credential-status]";
+const MODEL_STATUS_SELECTOR = "[data-pryx-comfyui-higgsfield-model-status]";
 
 const GENERATOR_CAPABILITIES = {
     PRYXComfyUIHiggsfieldImageGenerateEdit: new Set(["image_generate", "image_edit"]),
@@ -44,6 +45,7 @@ const MEDIA_PARAMETER_NAMES = new Set([
 const MEDIA_INPUT_NAMES = new Set(["references", "image", "end_image", "item_images", "video", "audio"]);
 let catalogPromise;
 let credentialStatusRevision = 0;
+let lastNotifiedCatalogVersion;
 
 function splitCombinedApiKey(value) {
     const combined = String(value ?? "").trim();
@@ -140,7 +142,35 @@ function createCredentialSetting() {
 }
 
 function createCatalogRefreshSetting() {
-    return createSettingsButton("Refresh catalog", refreshCatalog);
+    const wrapper = document.createElement("div");
+    wrapper.style.cssText = "display:flex;flex-direction:column;gap:8px;max-width:480px;";
+    const status = document.createElement("span");
+    status.setAttribute("data-pryx-comfyui-higgsfield-model-status", "");
+    status.setAttribute("role", "status");
+    status.textContent = "Models update automatically through your Higgsfield API key. Checking status…";
+    wrapper.append(createSettingsButton("Check models now", refreshCatalog), status);
+    requestJson(CATALOG_ROUTE).then((result) => renderModelStatus(result.update_status)).catch(() => {
+        status.textContent = "Model update status unavailable. Existing models remain usable.";
+    });
+    return wrapper;
+}
+
+function renderModelStatus(status) {
+    if (!status) return;
+    const message = (status.message || "Automatic model discovery is enabled.") +
+        (status.restart_required ? " New models or controls are ready. Restart ComfyUI and reload the browser to activate them." : "");
+    document.querySelectorAll(MODEL_STATUS_SELECTOR).forEach((element) => {
+        element.textContent = message;
+    });
+}
+
+function handleCatalogStatus(event) {
+    const status = event.detail || event;
+    renderModelStatus(status);
+    if (status.restart_required && status.catalog_version !== lastNotifiedCatalogVersion) {
+        lastNotifiedCatalogVersion = status.catalog_version;
+        notify("New Higgsfield models or controls are ready. Restart ComfyUI and reload the browser to activate them. Your running workflow is unchanged.");
+    }
 }
 
 function closeCredentialDialog() {
@@ -228,6 +258,7 @@ function openCredentialDialog(event) {
     });
     overlay.querySelector('[data-action="save"]').addEventListener("click", async () => {
         status.textContent = "Saving...";
+        renderModelStatus({ message: "Saving the API key and checking current models…" });
         try {
             const result = await requestJson(SETTINGS_ROUTE, { method: "PUT", body: JSON.stringify(values()) });
             form.elements.api_key.value = "";
@@ -235,6 +266,7 @@ function openCredentialDialog(event) {
             updateCredentialStatus(result);
         } catch (error) {
             status.textContent = error.message;
+            renderModelStatus({ message: "API key could not be saved. Existing models remain unchanged." });
         }
     });
     form.addEventListener("submit", (submitEvent) => submitEvent.preventDefault());
@@ -250,7 +282,8 @@ function openCredentialDialog(event) {
 async function refreshCatalog() {
     try {
         const result = await requestJson(REFRESH_ROUTE, { method: "POST", body: "{}" });
-        notify("Catalog downloaded: " + result.catalog_version + ". Restart ComfyUI and reload the browser to activate it consistently in all nodes.");
+        renderModelStatus(result);
+        notify(result.message + (result.restart_required ? " Restart ComfyUI and reload the browser to activate the update." : " No restart is needed."), result.last_sync_status === "higgsfield-api:failed");
     } catch (error) {
         notify(error.message, true);
     }
@@ -1169,17 +1202,18 @@ app.registerExtension({
         },
         {
             id: "PRYX.ComfyUI.Higgsfield.CatalogRefresh",
-            name: "Model catalog",
-            category: ["PRYX ComfyUI Higgsfield", "Catalog"],
+            name: "Automatic model updates",
+            category: ["PRYX ComfyUI Higgsfield", "Models"],
             type: createCatalogRefreshSetting,
             defaultValue: false,
         },
     ],
     setup() {
         api?.addEventListener?.("pryx_comfyui_higgsfield.progress", handleProgress);
+        api?.addEventListener?.("pryx_comfyui_higgsfield.catalog_status", handleCatalogStatus);
         // Trigger one read so settings/catalog errors are visible in the
         // browser console without placing credentials in the page.
-        requestJson(CATALOG_ROUTE).catch(() => {});
+        requestJson(CATALOG_ROUTE).then((result) => handleCatalogStatus(result.update_status || {})).catch(() => {});
     },
     nodeCreated(node) {
         attachReferenceCollector(node);

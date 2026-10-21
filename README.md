@@ -4,14 +4,15 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![ComfyUI](https://img.shields.io/badge/ComfyUI-%E2%89%A50.35.0-4f46e5)](https://github.com/comfyanonymous/ComfyUI)
 
-Generate and edit images and videos with Higgsfield from ComfyUI, using
-model-specific controls, connected media references, and estimate-first cost
-checks.
+Higgsfield image and video nodes for ComfyUI, with automatic API model updates,
+model-specific controls, connected references, and estimate-first cost checks.
 
 PRYX ComfyUI Higgsfield lets you call the documented Higgsfield image and video
-endpoints from normal ComfyUI workflows. Model-specific controls, choices,
-limits, and tooltips come from the bundled catalog, so a node only exposes the
-parameters supported by its selected model.
+endpoints from normal ComfyUI workflows. Enter your Higgsfield API key once:
+models, modes, choices, limits, and tooltips are discovered directly from the
+official API. Compatible new models and parameters do not require a new plugin
+release or a maintainer's GitHub push. A validated local cache and bundled
+snapshot keep the last working definitions available if discovery fails.
 
 The ComfyUI backend sends requests directly to `api.higgsfield.ai`. PRYX does
 not operate a proxy and does not receive your API credentials or generated
@@ -88,6 +89,11 @@ Open **ComfyUI Settings → PRYX ComfyUI Higgsfield → Credentials** and enter:
 The key name shown in the Higgsfield console is only a label; it is not part of
 the credential. If you no longer have the secret, create a new key and copy its
 complete value. Never put the key in a workflow or issue report.
+
+Saving the key automatically checks the available models in the background.
+Existing models can use the saved key immediately. If new models or controls
+were found, a notification and **Automatic model updates** in Settings explain
+that ComfyUI needs one restart and a browser reload to activate them safely.
 
 The **Validate estimate** button checks the credentials with an estimate
 request. It does not submit a paid generation. **Save locally** stores the
@@ -453,9 +459,10 @@ request; it never triggers an unquoted generation as a fallback.
 
 ## Model catalog
 
-The bundled catalog is the single source for model IDs, endpoint paths,
-supported inputs, choices, ranges, defaults, conditional requirements, and
-documentation links. Revision `2026-10-21.2` contains **87 inference endpoints**:
+The official API supplies model IDs, endpoint paths, supported inputs, choices,
+ranges, defaults, and conditional requirements. Each ComfyUI session uses one
+validated snapshot so the frontend and backend agree. The bundled fallback,
+revision `2026-10-21.2`, contains **87 inference endpoints**:
 86 from Higgsfield's model inventory plus the separately documented SOUL Cinema
 endpoint. SOUL ID training has its own node and is not counted as inference.
 Account access and media acceptance are still decided by Higgsfield.
@@ -497,31 +504,44 @@ authenticated **`GET /models?include_schema=true`**. Without `include_schema`,
 schemas are omitted. This integration uses that route with your locally
 configured credentials; no generation request is needed for discovery.
 
-At ComfyUI startup, a background check refreshes the catalog if its cache is
-more than 24 hours old. **Refresh catalog** runs the same check immediately.
-If authenticated discovery fails, the updater falls back to the published,
-reviewed PRYX catalog. Offline installations keep the latest valid local or
-bundled catalog. Updates activate **after restarting ComfyUI**, so a running
-workflow never changes its model schema halfway through execution. Reload the
-browser afterward. Older catalogs cannot replace newer ones.
+**For users:** install the pack, save your API key, and use it. Model maintenance
+does not depend on a GitHub Action, PR, or new release from PRYX.
 
-The repository also checks the public inventory every day at 06:00 UTC.
-Changes run through the Python and frontend tests and open a pull request for
-review; they are not automatically merged. This check needs **no login,
-cookies, or API key**: it uses the public console JSON catalog at
-`dash.higgsfield.ai/api/v2/app-models/`, including per-mode schemas. Public
-model documentation is a fallback. The old page scraper alone was no longer
-reliable after Higgsfield changed its website framework.
+- On startup, discovery runs **before node definitions are built** when there
+  is no API-confirmed cache, the cache is 24 hours old, or the key has changed.
+  A fresh cache avoids an unnecessary network request. Startup discovery uses
+  one attempt with short HTTP timeouts; it does not block offline use indefinitely.
+- Saving a key immediately schedules a model check. No manual refresh is needed.
+- Long-running servers check hourly whether their 24-hour cache needs refreshing.
+  Failed attempts retain the working cache and are retried on later checks.
+- If an update arrives during a session, it is cached and a notification asks
+  for a ComfyUI restart and browser reload. Existing workflows keep their
+  current schemas until then. Updates discovered at startup are active immediately.
+- If discovery is unavailable or incompatible, the latest valid local snapshot
+  is used; if none exists, the bundled snapshot is used. **No GitHub catalog is
+  downloaded at runtime.** A newer bundled release takes priority over an older cache.
 
-Repository setup: automatic PR creation requires **Settings → Actions →
-General → Workflow permissions → Allow GitHub Actions to create and approve
-pull requests**. This repository setting is currently disabled; an owner must
-approve enabling it. The workflow never approves or merges PRs. ComfyUI's
-local API refresh does not depend on this GitHub permission.
+Settings → **PRYX ComfyUI Higgsfield → Automatic model updates** shows the
+current check status, failures, and whether a restart is needed. **Check models
+now** is an optional troubleshooting button, not a required maintenance step.
 
-Partial inventories, unsafe references, incompatible schemas, and unknown
-output/task mappings are rejected instead of replacing the working catalog.
-New API task types may therefore need a code update as well as a catalog update.
+Incomplete API responses, unsafe references, incompatible schemas, and unknown
+output/task mappings are rejected instead of replacing the working snapshot.
+Models omitted from a complete API inventory are marked unavailable rather
+than blocking updates to the remaining models; their IDs are retained for
+diagnostics. They become selectable again if the API lists them later.
+Ordinary additions using existing task, media, and schema types update without
+a plugin release. New task/output types, new media roles, or a changed API
+protocol still require a code update. SOUL Cinema remains an explicitly
+documented exception absent from the general API inventory; that exception is
+kept in the bundled fallback. No updater can infer an undocumented protocol.
+
+**For maintainers:** the public JSON/schema audit remains available as a manual
+CLI and read-only GitHub Action for preparing a new bundled fallback. It is not
+scheduled, creates no PRs, and is not part of users' update path. Public auditing
+uses `dash.higgsfield.ai/api/v2/app-models/` without login or cookies, with model
+documentation as a fallback. See [Model updates](docs/model-updates.md) for the
+lifecycle, compatibility boundaries, and maintainer commands.
 
 **Upscalers:** no ByteDance/SeedVR or other standalone upscale endpoint was
 listed in the authenticated model inventory, public console catalog, or API
@@ -534,9 +554,6 @@ Higgsfield task and still be absent from another node when the provider does
 not document a compatible endpoint for that capability. The dropdowns therefore
 filter by capability: an item missing from **Reference to Video** is not a
 statement that the model is unavailable from Higgsfield in general.
-
-To refresh manually, open **ComfyUI Settings → PRYX ComfyUI Higgsfield → Model
-catalog**, click **Refresh catalog**, restart ComfyUI, and reload the browser.
 
 ## Outputs
 
@@ -563,10 +580,12 @@ VIDEO object does not need a file path in those directories.
 
 ### A model is missing from a dropdown
 
-The dropdown is filtered by node capability and active catalog status. Refresh
-the catalog, restart ComfyUI, and hard-reload the browser. If the model is not
-in the official Higgsfield endpoint documentation, it will not appear in this
-node pack.
+The dropdown is filtered by node capability and active snapshot status. Check
+**Automatic model updates** in Settings; if an update is waiting, restart
+ComfyUI and hard-reload the browser. You can use **Check models now** to bypass
+the 24-hour cache. If discovery reports incompatible data or a genuinely new
+task/media type, a plugin update may be required. A missing item in one node
+does not mean the model is absent from Higgsfield entirely.
 
 ### The model-information panel is too large
 

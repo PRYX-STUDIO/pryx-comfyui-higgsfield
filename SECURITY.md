@@ -38,6 +38,11 @@ ambiguous responses must be checked rather than blindly resubmitted.
 Catalog schemas cannot reference remote documents. Automatic updates validate
 the complete inventory and schemas before atomically replacing the cache;
 running workflows keep their startup catalog until ComfyUI restarts.
+Discovery uses the user's credentials only against the fixed Higgsfield API
+host. Runtime updates never fetch a catalog from GitHub or scrape model pages.
+The cache stores public model/schema data, the successful check time, and a
+SHA-256 key-ID fingerprint for invalidation, never the raw key ID or secret.
+Discovery failures do not replace the working cache or submit paid operations.
 
 ## Reporting
 

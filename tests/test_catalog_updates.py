@@ -63,7 +63,7 @@ def test_public_json_supplies_schema_and_all_family_modes(monkeypatch):
 def test_authenticated_discovery_explicitly_requests_schemas(monkeypatch):
     monkeypatch.setattr(discovery, "MIN_DISCOVERED_ENDPOINTS", 1)
     calls = []
-    client = SimpleNamespace(get_json=lambda path: calls.append(path) or {
+    client = SimpleNamespace(get_json=lambda path, **kw: calls.append(path) or {
         "total": 2, "items": [{"slug": "a/model", "input_schema": {"type": "object", "properties": {}}}, {"slug": "soul-id"}],
     })
     assert set(discovery.authenticated_snapshot(client)) == {"a/model"}
@@ -244,7 +244,7 @@ def test_provider_refresh_caches_valid_schemas_without_activating_mid_workflow(m
     assert json.loads(manager.cache_path.read_text())["models"]
 
 
-def test_invalid_authenticated_inventory_falls_back_to_reviewed_catalog(monkeypatch, tmp_path):
+def test_invalid_authenticated_inventory_falls_back_to_local_models(monkeypatch, tmp_path):
     from pryx_comfyui_higgsfield import credentials
     monkeypatch.setattr(credentials, "resolve_credentials", lambda **kw: Credentials("test", "test", "test"))
     monkeypatch.setattr(HiggsfieldClient, "close", lambda self: None)
@@ -252,10 +252,8 @@ def test_invalid_authenticated_inventory_falls_back_to_reviewed_catalog(monkeypa
         raise ValueError("Provider returned a partial inventory")
     monkeypatch.setattr(discovery, "authenticated_snapshot", invalid)
     manager = CatalogManager(cache_path=tmp_path / "catalog.json")
-    calls = []
-    monkeypatch.setattr(manager, "refresh", lambda: calls.append(True) or CATALOG)
-    assert manager.refresh_available() is CATALOG
-    assert calls == [True]
+    assert manager.refresh_available().as_payload() == CATALOG.as_payload()
+    assert manager.last_sync_status == "higgsfield-api:failed"
     assert not manager.cache_path.exists()
 
 

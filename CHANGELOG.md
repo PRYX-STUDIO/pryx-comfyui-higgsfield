@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.1.1 — October 21, 2026
+
+- Made official API discovery the user update path, independent of GitHub
+  catalog pushes, Actions, or maintainer PRs. Offline fallback is strictly local.
+- Discover current schemas before constructing node definitions at startup;
+  reuse an API-confirmed cache for 24 hours. Saving a key triggers discovery,
+  changing keys invalidates freshness, and long-lived servers recheck hourly.
+- Cache mid-session changes without mutating running workflows. Added model
+  update status in Settings and a notification when a restart is needed.
+- Bound startup discovery to one attempt with short HTTP timeouts. Failed
+  checks retain working definitions and are retried by later automatic checks.
+- Replaced scheduled catalog-update PRs with a manual, read-only audit workflow.
+  Added lifecycle tests and updated public documentation and package description.
+
 ## 1.1.0 — October 21, 2026
 
 - Refreshed all model schemas against the public console and authenticated

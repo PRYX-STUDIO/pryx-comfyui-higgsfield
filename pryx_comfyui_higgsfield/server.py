@@ -4,10 +4,11 @@ from __future__ import annotations
 
 from functools import lru_cache
 import asyncio
-from threading import Thread
+from threading import Event, Thread
 from typing import Any
 
 from .catalog import CatalogManager, runtime_catalog
+from .catalog.catalog import default_catalog_manager
 from .credentials import CredentialStore, Credentials, default_user_directory, mask_key_id, resolve_credentials
 from .errors import HiggsfieldError, redact_secrets
 from .styles import StyleManager
@@ -20,7 +21,32 @@ _prompt_server: Any = None
 
 @lru_cache(maxsize=1)
 def catalog_manager() -> CatalogManager:
-    return CatalogManager(cache_path=default_user_directory() / ".pryx_comfyui_higgsfield_catalog.json")
+    return default_catalog_manager()
+
+
+def catalog_status() -> dict[str, Any]:
+    current = runtime_catalog()
+    metadata = catalog_manager().metadata()
+    return {**metadata, "active_catalog_version": current.catalog_version,
+            "restart_required": metadata["catalog_version"] != current.catalog_version}
+
+
+def refresh_models(*, force: bool = False) -> dict[str, Any]:
+    """Refresh only the cache; never mutate schemas used by running nodes."""
+    manager = catalog_manager()
+    manager.refresh_available() if force else manager.load()
+    status = catalog_status()
+    if _prompt_server is not None:
+        try:
+            _prompt_server.send_sync("pryx_comfyui_higgsfield.catalog_status", status)
+        except Exception:
+            pass
+    return status
+
+
+def _catalog_refresh_loop(stop: Event) -> None:
+    while not stop.wait(60 * 60):
+        refresh_models()
 
 
 @lru_cache(maxsize=1)
@@ -59,7 +85,10 @@ def register_routes() -> None:
             key_id = data.get("key_id")
             secret = data.get("secret")
             credential_store().save(key_id, secret)
-            return web.json_response(credential_store().metadata())
+            # Saving a key is fast even if discovery is offline. A websocket
+            # event updates the persistent model status when discovery ends.
+            Thread(target=lambda: refresh_models(force=True), name="higgsfield-key-discovery", daemon=True).start()
+            return web.json_response({**credential_store().metadata(), "catalog_refresh": "scheduled"})
         except (HiggsfieldError, AttributeError, TypeError, ValueError) as error:
             return web.json_response({"error": redact_secrets(str(error))}, status=400)
 
@@ -109,6 +138,7 @@ def register_routes() -> None:
                     "last_sync_status": catalog_manager().last_sync_status,
                     "models": catalog.as_payload()["models"],
                     "available_catalog_version": catalog_manager().metadata()["catalog_version"],
+                    "update_status": catalog_status(),
                 }
             )
         except HiggsfieldError as error:
@@ -116,15 +146,7 @@ def register_routes() -> None:
 
     async def refresh_catalog(request):
         try:
-            catalog = await asyncio.to_thread(catalog_manager().refresh_available)
-            return web.json_response(
-                {
-                    "catalog_version": catalog.catalog_version,
-                    "source_date": catalog.source_date,
-                    "source": catalog.source,
-                    "models": catalog.as_payload()["models"],
-                }
-            )
+            return web.json_response(await asyncio.to_thread(refresh_models, force=True))
         except HiggsfieldError as error:
             return web.json_response({"error": redact_secrets(str(error))}, status=502)
 
@@ -166,9 +188,15 @@ def register_routes() -> None:
     routes.get("/pryx-comfyui-higgsfield/styles")(get_styles)
     routes.get("/pryx-comfyui-higgsfield/appearance-options")(get_appearance_options)
     _registered = True
-    # Download updates without blocking ComfyUI startup or changing schemas
-    # under an already running workflow. The next restart activates the cache.
-    Thread(target=catalog_manager().load, name="higgsfield-catalog-refresh", daemon=True).start()
+    # Startup discovery already ran before INPUT_TYPES were constructed.
+    # Long-lived servers also check hourly; successful API responses have a
+    # 24-hour TTL. A later update remains pending until a safe restart.
+    stop = Event()
+    Thread(target=_catalog_refresh_loop, args=(stop,), name="higgsfield-model-updates", daemon=True).start()
+    async def stop_catalog_updates(app):
+        stop.set()
+    if getattr(_prompt_server, "app", None) is not None:
+        _prompt_server.app.on_cleanup.append(stop_catalog_updates)
 
 
 def _credentials_from_request(data: Any) -> Credentials:
