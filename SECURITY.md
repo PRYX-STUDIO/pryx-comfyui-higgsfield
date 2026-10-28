@@ -14,6 +14,27 @@ systems receive owner-only permissions; Windows keeps the file in the active
 user directory and applies restrictive file attributes where the platform
 permits it.
 
+## Local settings API
+
+All plugin routes require a per-process session token, except the POST token
+bootstrap route, which requires same-origin access. Foreign and opaque origins
+are rejected, including when ComfyUI runs with permissive CORS. The bootstrap
+requires matching Origin or same-origin browser fetch metadata. Token-protected
+requests may omit both headers for HTTP LAN and older browser compatibility,
+but conflicting origin metadata is always rejected. The token stays in browser
+memory, is never part of a workflow or URL, and changes when the server
+restarts. Token and settings responses use `Cache-Control: no-store`.
+
+The frontend obtains the token automatically. A rejected stale token triggers
+one renewal and retry, before the handler has performed any action. Network
+failures and other write errors are not retried.
+
+This protects against cross-site configuration changes; it is not user
+authentication. ComfyUI deployments accessible over a network still need
+appropriate authentication and transport security. Reverse proxies must
+preserve the original scheme and host as seen by ComfyUI, or use a trusted
+deployment configuration that provides them correctly.
+
 ## Request safety
 
 Catalog endpoints are relative paths and are validated against

@@ -6,11 +6,17 @@ const path = require('node:path');
 
 const source = fs.readFileSync(path.join(__dirname, '../pryx_comfyui_higgsfield/web/js/settings.js'), 'utf8');
 
-function loadCredentialSettings(context) {
+function loadCredentialSettings(context, autoSession = true) {
     const start = source.indexOf('const SETTINGS_ROUTE =');
     const end = source.indexOf('\nasync function refreshCatalog()', start);
     assert.notEqual(start, -1);
     assert.notEqual(end, -1);
+    if (autoSession) {
+        const fetch = context.fetch;
+        context.fetch = (url, options) => url.endsWith('/session')
+            ? Promise.resolve({ ok: true, json: async () => ({ token: 'test-session-token' }) })
+            : fetch(url, options);
+    }
     vm.createContext(context);
     vm.runInContext(source.slice(start, end), context);
     return context;
@@ -110,6 +116,7 @@ test('saving a combined key stores both parts, clears and closes the dialog, and
 
     assert.equal(requests.length, 1);
     assert.equal(requests[0].options.method, 'PUT');
+    assert.equal(requests[0].options.headers['X-PRYX-Higgsfield-Token'], 'test-session-token');
     assert.deepEqual(JSON.parse(requests[0].options.body), {
         key_id: 'test-id',
         secret: 'test-secret',
@@ -117,6 +124,66 @@ test('saving a combined key stores both parts, clears and closes the dialog, and
     assert.equal(form.elements.api_key.value, '');
     assert.equal(overlay.removed, true);
     assert.equal(statusElement.textContent, 'Configured (te…id)');
+});
+
+test('a server restart renews the session and retries only the rejected request', async () => {
+    const requests = [];
+    let sessions = 0;
+    const context = loadCredentialSettings({
+        fetch: async (url, options) => {
+            requests.push({ url, options });
+            if (url.endsWith('/session')) {
+                return { ok: true, json: async () => ({ token: `session-${++sessions}` }) };
+            }
+            if (options.headers['X-PRYX-Higgsfield-Token'] === 'session-1') {
+                return { ok: false, status: 403, json: async () => ({ code: 'session_token_invalid' }) };
+            }
+            return { ok: true, json: async () => ({ configured: true }) };
+        },
+    }, false);
+    const result = await context.requestJson('/pryx-comfyui-higgsfield/settings', { method: 'PUT', body: '{}' });
+    assert.equal(result.configured, true);
+    assert.equal(requests.length, 4);
+    assert.equal(sessions, 2);
+    assert.equal(requests[0].options.method, 'POST');
+    assert.equal(requests[0].options.body, '{}');
+    assert.equal(requests[0].options.cache, 'no-store');
+    assert.equal(requests[3].options.headers['X-PRYX-Higgsfield-Token'], 'session-2');
+});
+
+test('generic failures and network failures never replay settings writes', async () => {
+    for (const networkFailure of [false, true]) {
+        let writes = 0;
+        const context = loadCredentialSettings({ fetch: async () => {
+            writes++;
+            if (networkFailure) throw new Error('Network failure');
+            return { ok: false, status: 403, json: async () => ({ error: 'Forbidden' }) };
+        } });
+        await assert.rejects(context.requestJson('/settings', { method: 'PUT', body: '{}' }));
+        assert.equal(writes, 1);
+    }
+});
+
+test('an expired session retries at most once and bootstrap failures can recover', async () => {
+    let calls = 0;
+    const context = loadCredentialSettings({ fetch: async () => {
+        calls++;
+        return { ok: false, status: 403, json: async () => ({ code: 'session_token_invalid' }) };
+    } });
+    await assert.rejects(context.requestJson('/settings', { method: 'DELETE' }));
+    assert.equal(calls, 2);
+
+    let attempts = 0;
+    const recovering = loadCredentialSettings({ fetch: async (url) => {
+        if (url.endsWith('/session')) {
+            if (++attempts === 1) throw new Error('Offline');
+            return { ok: true, json: async () => ({ token: 'new-session' }) };
+        }
+        return { ok: true, json: async () => ({ configured: true }) };
+    } }, false);
+    await assert.rejects(recovering.requestJson('/settings'));
+    assert.equal((await recovering.requestJson('/settings')).configured, true);
+    assert.equal(attempts, 2);
 });
 
 test('model updates show restart status and notify only once per pending version', () => {

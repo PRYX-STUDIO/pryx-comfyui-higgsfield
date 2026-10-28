@@ -101,6 +101,11 @@ credentials in the active ComfyUI user directory. The secret is cleared from
 the form after saving and never becomes a workflow input or browser-storage
 value.
 
+The settings dialog automatically establishes a protected local session.
+There is no extra token to enter. Requests from foreign websites are rejected,
+including with permissive ComfyUI CORS settings. After updating this pack,
+restart ComfyUI and reload its browser tab to load the matching frontend.
+
 For headless installations, use one of these supported configurations:
 
 ```text
@@ -633,6 +638,7 @@ error to Higgsfield.
 Run the local unit and mock integration tests:
 
 ```powershell
+python -m pip install -r requirements.txt pytest aiohttp
 python -m pytest -q
 node --test
 ```

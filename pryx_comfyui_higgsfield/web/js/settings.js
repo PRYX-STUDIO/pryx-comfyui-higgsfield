@@ -9,6 +9,9 @@ import { ComfyWidgets } from "../../../scripts/widgets.js";
  */
 
 const SETTINGS_ROUTE = "/pryx-comfyui-higgsfield/settings";
+const SESSION_ROUTE = "/pryx-comfyui-higgsfield/session";
+const SESSION_HEADER = "X-PRYX-Higgsfield-Token";
+let sessionTokenPromise;
 const VALIDATE_ROUTE = "/pryx-comfyui-higgsfield/settings/validate";
 const CATALOG_ROUTE = "/pryx-comfyui-higgsfield/catalog";
 const REFRESH_ROUTE = "/pryx-comfyui-higgsfield/catalog/refresh";
@@ -94,13 +97,43 @@ function loadCredentialStatus() {
         });
 }
 
-async function requestJson(url, options = {}) {
+function sessionToken() {
+    if (!sessionTokenPromise) {
+        // POST supplies Origin even on HTTP LAN hosts where browsers omit
+        // Sec-Fetch-Site. No credentials or other private data go in this body.
+        sessionTokenPromise = fetch(SESSION_ROUTE, {
+            method: "POST", credentials: "same-origin", cache: "no-store",
+            headers: { "Content-Type": "application/json" }, body: "{}",
+        })
+            .then(async (response) => {
+                const result = await response.json();
+                if (!response.ok || typeof result.token !== "string" || !result.token) {
+                    throw new Error("Could not open a secure settings session. Reload ComfyUI and retry.");
+                }
+                return result.token;
+            }).catch((error) => {
+                sessionTokenPromise = undefined;
+                throw error;
+            });
+    }
+    return sessionTokenPromise;
+}
+
+async function requestJson(url, options = {}, retrySession = true) {
+    const token = await sessionToken();
     const response = await fetch(url, {
-        credentials: "same-origin",
-        headers: { "Content-Type": "application/json", ...(options.headers || {}) },
         ...options,
+        credentials: "same-origin",
+        cache: "no-store",
+        headers: { "Content-Type": "application/json", ...(options.headers || {}), [SESSION_HEADER]: token },
     });
     const data = await response.json().catch(() => ({}));
+    // This explicit error is returned before the handler performs any action.
+    // Never retry timeouts or arbitrary failed writes.
+    if (response.status === 403 && data.code === "session_token_invalid" && retrySession) {
+        sessionTokenPromise = undefined;
+        return requestJson(url, options, false);
+    }
     if (!response.ok) {
         throw new Error(data.error || "Request failed (" + response.status + ")");
     }

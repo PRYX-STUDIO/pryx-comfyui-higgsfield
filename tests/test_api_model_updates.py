@@ -206,8 +206,13 @@ def test_saving_credentials_schedules_discovery_and_cleanup_stops_periodic_threa
             pass
     saved = []
     refreshed = []
+    class Response(dict):
+        headers = None
+        def __init__(self, payload, **kw):
+            super().__init__(payload)
+            self.headers = {}
     prompt_server = SimpleNamespace(routes=Routes(), app=SimpleNamespace(on_cleanup=[]))
-    monkeypatch.setitem(sys.modules, "aiohttp", SimpleNamespace(web=SimpleNamespace(json_response=lambda payload, **kw: payload)))
+    monkeypatch.setitem(sys.modules, "aiohttp", SimpleNamespace(web=SimpleNamespace(json_response=Response)))
     monkeypatch.setitem(sys.modules, "server", SimpleNamespace(PromptServer=SimpleNamespace(instance=prompt_server)))
     monkeypatch.setattr(server, "_registered", False)
     monkeypatch.setattr(server, "_prompt_server", None)
@@ -218,7 +223,10 @@ def test_saving_credentials_schedules_discovery_and_cleanup_stops_periodic_threa
     server.register_routes()
     async def payload():
         return {"key_id": "test-id", "secret": "test-secret"}
-    response = asyncio.run(routes["put", "/pryx-comfyui-higgsfield/settings"](SimpleNamespace(json=payload)))
+    session_request = SimpleNamespace(headers={"Sec-Fetch-Site": "same-origin"})
+    token = asyncio.run(routes["post", "/pryx-comfyui-higgsfield/session"](session_request))["token"]
+    response = asyncio.run(routes["put", "/pryx-comfyui-higgsfield/settings"](SimpleNamespace(
+        json=payload, headers={"Sec-Fetch-Site": "same-origin", "X-PRYX-Higgsfield-Token": token})))
     assert response == {"configured": True, "catalog_refresh": "scheduled"}
     assert saved == [("test-id", "test-secret")]
     threads[-1].kw["target"]()

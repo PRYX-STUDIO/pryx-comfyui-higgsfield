@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.1.2 — October 28, 2026
+
+- Added same-origin validation and per-process CSRF tokens to the local
+  credentials, model catalog, style, and appearance API routes. The guard
+  remains active with permissive ComfyUI CORS settings.
+- Kept the existing credential dialog. Session setup and renewal after a
+  server restart happen automatically without additional user input.
+- Added HTTP integration tests for rejected foreign requests, missing and
+  invalid tokens, and accepted settings operations, plus frontend retry tests.
+- Documented the local API boundary and network-deployment requirements.
+
 ## 1.1.1 — October 21, 2026
 
 - Made official API discovery the user update path, independent of GitHub

@@ -11,6 +11,7 @@ from .catalog import CatalogManager, runtime_catalog
 from .catalog.catalog import default_catalog_manager
 from .credentials import CredentialStore, Credentials, default_user_directory, mask_key_id, resolve_credentials
 from .errors import HiggsfieldError, redact_secrets
+from .request_guard import RequestGuard
 from .styles import StyleManager
 from .types import ProgressEvent
 
@@ -179,14 +180,16 @@ def register_routes() -> None:
         except HiggsfieldError as error:
             return web.json_response({"error": redact_secrets(str(error))}, status=400)
 
-    routes.get("/pryx-comfyui-higgsfield/settings")(get_settings)
-    routes.put("/pryx-comfyui-higgsfield/settings")(put_settings)
-    routes.delete("/pryx-comfyui-higgsfield/settings")(delete_settings)
-    routes.post("/pryx-comfyui-higgsfield/settings/validate")(validate_settings)
-    routes.get("/pryx-comfyui-higgsfield/catalog")(get_catalog)
-    routes.post("/pryx-comfyui-higgsfield/catalog/refresh")(refresh_catalog)
-    routes.get("/pryx-comfyui-higgsfield/styles")(get_styles)
-    routes.get("/pryx-comfyui-higgsfield/appearance-options")(get_appearance_options)
+    guard = RequestGuard()
+    routes.post("/pryx-comfyui-higgsfield/session")(guard.session)
+    routes.get("/pryx-comfyui-higgsfield/settings")(guard.protect(get_settings))
+    routes.put("/pryx-comfyui-higgsfield/settings")(guard.protect(put_settings))
+    routes.delete("/pryx-comfyui-higgsfield/settings")(guard.protect(delete_settings))
+    routes.post("/pryx-comfyui-higgsfield/settings/validate")(guard.protect(validate_settings))
+    routes.get("/pryx-comfyui-higgsfield/catalog")(guard.protect(get_catalog))
+    routes.post("/pryx-comfyui-higgsfield/catalog/refresh")(guard.protect(refresh_catalog))
+    routes.get("/pryx-comfyui-higgsfield/styles")(guard.protect(get_styles))
+    routes.get("/pryx-comfyui-higgsfield/appearance-options")(guard.protect(get_appearance_options))
     _registered = True
     # Startup discovery already ran before INPUT_TYPES were constructed.
     # Long-lived servers also check hourly; successful API responses have a
